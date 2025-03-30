@@ -10,13 +10,14 @@ SRC_FILES = main.c
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-INCLUDE = -L ./libft -lft -L ./dprintf -lftdprintf
+INCLUDE = -L ./libft -lft -L ./dprintf -lftdprintf -L ./ft_printf -lftprintf
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(MAKE) -C libft
 	$(MAKE) -C dprintf
+	$(MAKE) -C ft_printf
 	$(CC) $(CFLAGS) $(OBJ) -I$(INCDIR) -o $(NAME) -lreadline $(INCLUDE)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
@@ -27,11 +28,13 @@ clean:
 	$(RM) -r $(OBJDIR)
 	$(MAKE) -C libft clean
 	$(MAKE) -C dprintf clean
+	$(MAKE) -C ft_printf clean
 
 fclean: clean
 	$(RM) $(NAME)
 	$(MAKE) -C libft fclean
 	$(MAKE) -C dprintf fclean
+	$(MAKE) -C ft_printf fclean
 
 re: fclean all
 
