@@ -1,7 +1,6 @@
 NAME = minishell
 SRCDIR = src
 OBJDIR = obj
-INCDIR = include
 CC	 = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
@@ -18,7 +17,7 @@ $(NAME): $(OBJ)
 	$(MAKE) -C libft
 	$(MAKE) -C dprintf
 	$(MAKE) -C ft_printf
-	$(CC) $(CFLAGS) $(OBJ) -I$(INCDIR) -o $(NAME) -lreadline $(INCLUDE)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline $(INCLUDE)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)

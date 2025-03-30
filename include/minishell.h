@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/30 21:08:35 by lsellier          #+#    #+#             */
-/*   Updated: 2025/03/31 01:50:27 by lsellier         ###   ########.fr       */
+/*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
+/*   Updated: 2025/03/30 23:11:29 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int	main(int ac, char **av)
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <signal.h>
+# include <stdbool.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <limits.h>
+
+typedef struct s_minishell
 {
-	// t_minishell	*shell;
+	char	**env;
+}			t_minishell;
 
-	(void) ac;
-	(void) av;
-	rl_outstream = stderr;
-	// minishell();
-	while (true)
-	{
-	free(readline("\033[1;33mMini station essence ⛽ $ \033[0m"));
-		// minishell();
-	}
-	return (0);
-}
+#endif
