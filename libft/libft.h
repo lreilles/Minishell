@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 00:10:55 by lsellier          #+#    #+#             */
-/*   Updated: 2025/01/29 15:43:40 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:23:04 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,4 @@ char	*ft_strtrim(char const *s1, char const *charset);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	*ft_calloc(size_t n, size_t size);
-
 #endif

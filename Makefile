@@ -4,7 +4,10 @@ OBJDIR = obj
 CC	 = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRC_FILES = main.c
+SRC_FILES = main.c \
+			minishell.c \
+			signals.c \
+			
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

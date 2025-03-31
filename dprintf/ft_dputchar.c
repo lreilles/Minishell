@@ -6,13 +6,13 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 23:42:16 by lsellier          #+#    #+#             */
-/*   Updated: 2025/03/30 20:24:23 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/03/31 20:59:39 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_dprintf.h"
 
-int	ft_fputchar(int c, int fd)
+int	ft_dputchar(int c, int fd)
 {
 	write(fd, &c, 1);
 	return (1);
