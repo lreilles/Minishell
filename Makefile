@@ -7,9 +7,9 @@ CFLAGS = -Wall -Wextra -Werror -g
 SRC_FILES = main.c \
 			minishell.c \
 			signals.c \
-			utils_tab.c \
-			utils_struct.c \
-			utils_fds.c \
+			utils/utils_tab.c \
+			utils/utils_struct.c \
+			utils/utils_fds.c \
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

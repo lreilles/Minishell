@@ -6,11 +6,11 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:02:49 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/01 00:03:36 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/01 00:32:59 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	close_fds(void)
 {

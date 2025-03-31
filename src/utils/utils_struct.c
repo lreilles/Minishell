@@ -6,11 +6,11 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:01:55 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/01 00:02:24 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/01 00:33:04 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 void	init_struct(t_minishell **shell, char **env)
 {

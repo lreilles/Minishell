@@ -6,11 +6,11 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:00:44 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/01 00:01:00 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/01 00:33:08 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 char	**ft_tabdup(char **tab)
 {
