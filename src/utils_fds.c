@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils_fds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/30 21:08:35 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/01 00:04:08 by lsellier         ###   ########.fr       */
+/*   Created: 2025/04/01 00:02:49 by lsellier          #+#    #+#             */
+/*   Updated: 2025/04/01 00:03:36 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(int ac, char **av)
+void	close_fds(void)
 {
-	t_minishell	*shell;
+	int	i;
 
-	(void)ac;
-	(void)av;
-	signals(SIGNAL_IGN);
-	rl_outstream = stderr;
-	init_struct(&shell, av + ac + 1);
-	minishell(shell);
-	close_fds();
-	return (free_struct(shell));
+	i = 0;
+	while (i < 1024)
+		close(i++);
 }

@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/03/31 22:37:09 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/01 00:03:46 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,10 @@ typedef struct s_minishell
 
 void	minishell(t_minishell *shell);
 void	signals(int sig);
+char	**ft_tabdup(char **tab);
+void	ft_free_tab(char **tab);
+void	init_struct(t_minishell **shell, char **env);
+int		free_struct(t_minishell *shell);
+void	close_fds(void);
+
 #endif

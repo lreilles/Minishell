@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 16:08:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/03/31 22:40:50 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/03/31 23:58:56 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ void	minishell(t_minishell *shell)
 		if (line[0] == 't')
 			shell->exit_status = 127;
 		add_history(line);
+		free(line);
 	}
 }
