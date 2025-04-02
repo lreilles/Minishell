@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ameduboi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 02:39:26 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/04/02 22:24:02 by ameduboi         ###   ########.fr       */
+/*   Created: 2025/04/02 22:31:25 by ameduboi          #+#    #+#             */
+/*   Updated: 2025/04/02 22:47:58 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_echo(char **str, int flag)
+void	pwd(char **env)
 {
 	int	i;
+	char *oldpwd;
 
 	i = 0;
-	while (str[i])
+	while (env[i] && ft_strncmp("OLDPWD=", env[i], 7) != 0)
+		i++;
+	while (env[i] != NULL)
 	{
-		if (i != 0)
-			ft_printf(" ");
-		ft_printf("%s", str[i]);
+		ft_printf("%s", env[i]);
 		i++;
 	}
-	if (flag == 0)
-		ft_printf("\n");
+	ft_printf("\n");
 }
+//    OLDPWD=/home/ameduboi/Documents/42cursus/3rd_circle/Minishell/src/built-in

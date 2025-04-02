@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ameduboi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 02:39:26 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/04/02 22:24:02 by ameduboi         ###   ########.fr       */
+/*   Created: 2025/04/02 22:48:39 by ameduboi          #+#    #+#             */
+/*   Updated: 2025/04/02 22:52:07 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_echo(char **str, int flag)
+void	env(char **env)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (env[i] != NULL)
 	{
-		if (i != 0)
-			ft_printf(" ");
-		ft_printf("%s", str[i]);
+		ft_printf("%s\n", env[i]);
 		i++;
 	}
-	if (flag == 0)
-		ft_printf("\n");
 }
