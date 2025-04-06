@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/30 21:08:35 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/01 22:45:01 by lsellier         ###   ########.fr       */
+/*   Created: 2025/04/06 03:39:20 by lsellier          #+#    #+#             */
+/*   Updated: 2025/04/06 03:40:39 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	main(int ac, char **av)
+int	ft_isspace(int c)
 {
-	t_minishell	*shell;
-
-	(void)ac;
-	(void)av;
-	signals(SIGNAL_IGN);
-	rl_outstream = stderr;
-	init_struct(&shell, av + ac + 1);
-	minishell(shell);
-	close_fds();
-	return (free_struct(shell));
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
 }

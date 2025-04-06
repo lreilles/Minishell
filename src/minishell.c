@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 16:08:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/01 00:14:32 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/01 22:29:05 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	minishell(t_minishell *shell)
 	char	*line;
 
 	line = NULL;
-	(void) shell;
 	while (true)
 	{
 		signals(SIGNAL_EXECUTE);
@@ -31,10 +30,12 @@ void	minishell(t_minishell *shell)
 		if (line == NULL)
 			return ;
 		if (line[0] == '\0')
+		{
+			free(line);
 			continue ;
-		if (line[0] == 't')
-			shell->exit_status = 127;
+		}
 		add_history(line);
+		parsing(shell, line);
 		free(line);
 	}
 }
