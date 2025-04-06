@@ -3,28 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ameduboi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:31:25 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/04/02 22:47:58 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/04/06 03:00:33 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+#include <stdio.h>
 
-void	pwd(char **env)
+void	pwd(void)
 {
-	int	i;
-	char *oldpwd;
+	char	*path;
 
-	i = 0;
-	while (env[i] && ft_strncmp("OLDPWD=", env[i], 7) != 0)
-		i++;
-	while (env[i] != NULL)
-	{
-		ft_printf("%s", env[i]);
-		i++;
-	}
-	ft_printf("\n");
+	path = getcwd(NULL, 0);
+	printf("%s\n", path);
+	free(path);
 }
-//    OLDPWD=/home/ameduboi/Documents/42cursus/3rd_circle/Minishell/src/built-in
