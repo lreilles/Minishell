@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:42:32 by lsellier          #+#    #+#             */
-/*   Updated: 2025/03/31 16:23:09 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/09 05:12:41 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,29 +106,3 @@ char	**ft_split(char const *str, char charset)
 		return (NULL);
 	return (allouer_add_tab(str, tmp, nb_mots, tableau));
 }
-
-// int	main(void)
-// {
-// 	char	str[] = "Non, mais j’crois qu’il faut qu’vous arrêtiez "
-// 	"d’essayer d’dire des trucs. Ça vous fatigue, déjà, et pour les"
-// 	" autres, vous vous rendez pas compte de c’que c’est … Moi quand"
-// 	" vous faites ça, ça me fout une angoisse … J’pourrais vous tuer,"
-// 	" je crois. De chagrin, hein ! J’vous jure c’est pas bien, il faut"
-// 	" plus que vous parliez avec des gens.";
-// 	char	charset = ' ';
-// 	char	**result;
-// 	int		i;
-
-// 	result = ft_split(str, charset);
-// 	if (result == NULL)
-// 		return (1);
-// 	i = 0;
-// 	while (result[i] != NULL)
-// 	{
-// 		printf("%s\n", result[i]);
-// 		free(result[i]);
-// 		i++;
-// 	}
-// 	free(result);
-// 	return (0);
-// }

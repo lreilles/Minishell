@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 16:08:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/01 22:29:05 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/09 05:05:17 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	minishell(t_minishell *shell)
 			continue ;
 		}
 		add_history(line);
-		parsing(shell, line);
+		if (parsing(shell, line))
+			ft_execute_cmds(shell);
 		free(line);
 	}
 }

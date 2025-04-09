@@ -6,158 +6,122 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 21:52:51 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/06 04:50:37 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/09 05:16:29 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	est_dans_charset(char const c, char *charset)
+void	separator_count(char *line, int *i, int *len, int *add_len)
 {
-	int	i;
+	char	special;
 
-	i = 0;
-	while (charset[i])
+	special = line[*i];
+	if (ft_isspace(special))
 	{
-		if (c == charset[i])
-			return (1);
-		i++;
+		*add_len = 1;
+		while (ft_isspace(line[*i]))
+			(*i)++;
 	}
-	return (0);
+	else
+	{
+		while (line[*i] == special)
+			(*i)++;
+		(*len)++;
+		(*add_len) = 1;
+	}
 }
 
-static char	*copier_mot(char const *str, int debut, int fin)
-{
-	char	*mot;
-	int		i;
-
-	mot = malloc((fin - debut + 1) * sizeof(char));
-	if (!mot)
-		return (NULL);
-	i = 0;
-	while (debut < fin)
-	{
-		mot[i++] = str[debut++];
-	}
-	mot[i] = '\0';
-	return (mot);
-}
-
-static char	**allouer_add_tab(char const *str, char *c, int nb_mot, char **tab)
-{
-	int	i;
-	int	k;
-	int	debut;
-
-	i = 0;
-	k = 0;
-	while (str[i] && k < nb_mot)
-	{
-		while (str[i] && est_dans_charset(str[i], c))
-			i++;
-		debut = i;
-		while (str[i] && !est_dans_charset(str[i], c))
-			i++;
-		if (i > debut)
-		{
-			tab[k] = copier_mot(str, debut, i);
-			if (!tab[k])
-				return (ft_free_tab(tab), NULL);
-			k++;
-		}
-	}
-	tab[k] = NULL;
-	return (tab);
-}
-
-char	**ft_split(char const *str, char charset)
-{
-	int		nb_mots;
-	char	tmp[2];
-	char	**tableau;
-	int		i;
-
-	tmp[0] = charset;
-	tmp[1] = '\0';
-	i = 0;
-	nb_mots = 0;
-	while (str[i])
-	{
-		if (!est_dans_charset(str[i], &charset))
-		{
-			if (i == 0 || est_dans_charset(str[i - 1], &charset))
-				nb_mots++;
-		}
-		i++;
-	}
-	tableau = malloc((nb_mots + 1) * sizeof(char *));
-	if (!tableau)
-		return (NULL);
-	return (allouer_add_tab(str, tmp, nb_mots, tableau));
-}
-
-int	tab_len(char *line)
+int	count_tab_len(char *line)
 {
 	int	i;
 	int	len;
-	int	quote;
+	int	add_len;
 
-	len = 1;
+	len = 0;
 	i = 0;
-	quote = 0;
-	while (ft_isspace(line[i]))
-		i++;
+	add_len = 1;
 	while (line[i])
 	{
-		if (line[i] == '"' || line[i] == '\'')
+		if (!est_dans_charset(line[i]))
 		{
-			quote = line[i];
-			i++;
-			while (line[i] != quote && line[i])
+			while (line[i] && !est_dans_charset(line[i]))
 				i++;
-			while (ft_isspace(line[i]))
-				i++;
+			increment_if_necessary(&len, &add_len);
 		}
-		else if (line[i] == '|' || line[i] == '&' || line[i] == ' ')
+		else if (line[i] == '"' || line[i] == '\'')
 		{
+			increment_if_necessary(&len, &add_len);
+			skip_quotes(line, &i, line[i]);
+		}
+		else if (ft_is_separator(line[i]))
+			separator_count(line, &i, &len, &add_len);
+	}
+	return (len);
+}
+
+int	len_of_str_split(char *line)
+{
+	int		len;
+	char	special;
+
+	len = 0;
+	if (line[len] == '|' || line[len] == '&' || line[len] == '<'
+		|| line[len] == '>')
+	{
+		special = line[len];
+		while (line[len] == special)
 			len++;
-			if (line[i] == '|' || line[i] == '&')
-			{
-				len++;
-				i++;
-			}
-			if (line[i] == '|' || line[i] == '&')
-				i++;
-			// i++;
-			while (ft_isspace(line[i]))
-				i++;
-		}
-		else
+	}
+	else
+	{
+		while (line[len] && !ft_isspace(line[len]) && !(line[len] == '|'
+				|| (line[len] == '&') || line[len] == '<' || line[len] == '>'))
 		{
-			while (line[i] != ' ' && line[i] != '|' && line[i] != '&'
-				&& line[i] != '\0')
-				i++;
-			if (ft_isspace(line[i] || line[i] == '|' || line[i] == '&'))
+			if (line[len] == '\"' || line[len] == '\'')
+				skip_quotes(line, &len, line[len]);
+			else
 				len++;
-			while (ft_isspace(line[i]))
-				i++;
 		}
 	}
 	return (len);
 }
 
-char	**ft_split_minishell(char *line)
+void	add_char_to_tab(char **tab, char *line, int len_of_str)
 {
 	int	i;
-	int	j;
 
-	// char	**tab;
 	i = 0;
-	j = 0;
-	ft_printf("%d\n", tab_len(line));
-	// tab = malloc(2 * sizeof(char *));
-	// while (line[i])
-	// {
-	// }
-	return (NULL);
+	while (i < len_of_str)
+	{
+		(*tab)[i] = line[i];
+		i++;
+	}
+	(*tab)[i] = '\0';
+}
+
+char	**ft_split_minishell(char *line)
+{
+	char	**tab;
+	int		i;
+	int		len_of_str;
+	int		len_of_tab;
+
+	i = 0;
+	len_of_tab = count_tab_len(line);
+	tab = malloc((len_of_tab + 1) * sizeof(char *));
+	if (!tab)
+		return (NULL);
+	while (i != len_of_tab)
+	{
+		while (ft_isspace(*line))
+			line++;
+		len_of_str = len_of_str_split(line);
+		tab[i] = malloc((len_of_str + 1) * sizeof(char));
+		add_char_to_tab(&(tab[i]), line, len_of_str);
+		line = line + len_of_str;
+		i++;
+	}
+	tab[len_of_tab] = NULL;
+	return (tab);
 }

@@ -6,49 +6,27 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 22:25:44 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/06 03:46:17 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/09 05:33:51 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	count_args(char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-		i++;
-	return (i);
-}
-
-void	parsing(t_minishell *shell, char *line)
+int	parsing(t_minishell *shell, char *line)
 {
 	char	**args;
-	int		i;
 
-	i = 0;
-	args = ft_split_minishell(line);
 	if (!is_quote_closed(line))
-		return (shell->exit_status = 2, (void)ft_dprintf(2,
-				"minishell: syntax error: unclosed quotes\n"));
+		return (shell->exit_status = 2, ft_dprintf(2,
+				"minishell: syntax error: unclosed quotes\n"), 0);
 	args = ft_split_minishell(line);
-	// shell->nb_args = count_args(args);
-	// while (args[i])
-	// {
-	// 	if (ft_strcmp(args[i], "|") == 0)
-	// 	{
-	// 		if (i == 0 || i == shell->nb_args - 1 || ft_strcmp(args[i + 1],
-	// 				"|") == 0)
-	// 			return (shell->exit_status = 2, (void)ft_dprintf(2,
-	// 					"minishell: syntax error near unexpected token `|'\n"));
-	// 	}
-	// 	i++;
-	// }
-	// ft_free_tab(args);
-	(void)shell;
-	(void)line;
+	shell->nb_args = count_tab_len(line);
+	if (verif_error(args, shell, line))
+		return (ft_free_tab(args), 0);
+	shell->args = args;
+	return (1);
 }
+
 // char	**remove_quotes(char **args)
 // {
 // 	int	i;

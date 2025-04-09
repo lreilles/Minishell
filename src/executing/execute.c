@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/06 03:39:20 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/09 00:32:27 by lsellier         ###   ########.fr       */
+/*   Created: 2025/04/09 04:52:34 by lsellier          #+#    #+#             */
+/*   Updated: 2025/04/09 05:02:49 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_isspace(int c)
+int	ft_issplit_cmd(char *str)
 {
-	if (c == ' ' || (c >= 9 && c <= 13))
+	if (!ft_strcmp(str, "|") || !ft_strcmp(str, "||") || !ft_strcmp(str, "&&"))
 		return (1);
 	return (0);
+}
+
+void	ft_execute_cmds(t_minishell *shell)
+{
+	int	i;
+	int	count_cmds;
+
+	i = 0;
+	count_cmds = 1;
+	while (shell->args[i] != NULL)
+	{
+		if (ft_issplit_cmd(shell->args[i]))
+			count_cmds++;
+		i++;
+	}
+	ft_printf("%d\n", count_cmds);
+	ft_free_tab(shell->args);
 }
