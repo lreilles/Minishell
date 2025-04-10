@@ -6,13 +6,13 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:43:51 by lsellier          #+#    #+#             */
-/*   Updated: 2025/03/31 22:37:23 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/10 22:27:42 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	g_sig = 0;
+int			g_sig = 0;
 
 static void	int_handler(int sig)
 {

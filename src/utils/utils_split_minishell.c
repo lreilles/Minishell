@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 21:52:51 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/09 05:16:29 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/10 22:33:51 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 void	separator_count(char *line, int *i, int *len, int *add_len)
 {
 	char	special;
+	int		count;
 
 	special = line[*i];
+	count = 0;
 	if (ft_isspace(special))
 	{
 		*add_len = 1;
@@ -25,8 +27,11 @@ void	separator_count(char *line, int *i, int *len, int *add_len)
 	}
 	else
 	{
-		while (line[*i] == special)
+		while (line[*i] == special && count < 2)
+		{
 			(*i)++;
+			count++;
+		}
 		(*len)++;
 		(*add_len) = 1;
 	}
@@ -70,7 +75,7 @@ int	len_of_str_split(char *line)
 		|| line[len] == '>')
 	{
 		special = line[len];
-		while (line[len] == special)
+		while (line[len] == special && len < 2)
 			len++;
 	}
 	else
@@ -109,6 +114,7 @@ char	**ft_split_minishell(char *line)
 
 	i = 0;
 	len_of_tab = count_tab_len(line);
+	ft_printf("len of tab = %d\n", len_of_tab);
 	tab = malloc((len_of_tab + 1) * sizeof(char *));
 	if (!tab)
 		return (NULL);
@@ -117,11 +123,18 @@ char	**ft_split_minishell(char *line)
 		while (ft_isspace(*line))
 			line++;
 		len_of_str = len_of_str_split(line);
+		ft_printf("len of str = %d\n", len_of_str);
 		tab[i] = malloc((len_of_str + 1) * sizeof(char));
 		add_char_to_tab(&(tab[i]), line, len_of_str);
 		line = line + len_of_str;
 		i++;
 	}
 	tab[len_of_tab] = NULL;
+	i = 0;
+	while (tab[i])
+	{
+		ft_printf("%s\n", tab[i]);
+		i++;
+	}
 	return (tab);
 }

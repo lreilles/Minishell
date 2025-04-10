@@ -16,7 +16,8 @@ SRC_FILES = main.c \
 			utils/ft_isspace.c \
 			utils/utils_split_minishell2.c \
 			parsing/verif_errors.c \
-			executing/execute.c
+			executing/execute.c \
+			parsing/creat_cmds.c
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

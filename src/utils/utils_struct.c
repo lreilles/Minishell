@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:01:55 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/09 05:10:45 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/10 03:39:11 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_struct(t_minishell **shell, char **env)
 	(*shell)->exit_status = 0;
 	(*shell)->nb_args = 0;
 	(*shell)->args = NULL;
+	(*shell)->cmds = NULL;
 }
 
 int	free_struct(t_minishell *shell)

@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 04:52:34 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/09 05:02:49 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/10 22:33:19 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ void	ft_execute_cmds(t_minishell *shell)
 			count_cmds++;
 		i++;
 	}
-	ft_printf("%d\n", count_cmds);
 	ft_free_tab(shell->args);
 }
