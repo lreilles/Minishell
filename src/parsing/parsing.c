@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 22:25:44 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/10 23:32:16 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/10 23:51:03 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	parsing(t_minishell *shell, char *line)
 {
 	char	**args;
-	t_command *tmp;
 
 	if (!is_quote_closed(line))
 		return (shell->exit_status = 2, ft_dprintf(2,
@@ -26,14 +25,6 @@ int	parsing(t_minishell *shell, char *line)
 		return (ft_free_tab(args), 0);
 	shell->args = args;
 	shell->cmds = creat_cmds(shell);
-	while (shell->cmds)
-	{
-		ft_dprintf(2, "cmd test: %s\n", shell->cmds->cmd[1]);
-		ft_free_tab(shell->cmds->cmd);
-		tmp = shell->cmds->next;
-		free(shell->cmds);
-		shell->cmds = tmp;
-	}
 	return (1);
 }
 

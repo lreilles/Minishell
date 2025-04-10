@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:01:55 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/10 03:39:11 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/10 23:48:06 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_struct(t_minishell **shell, char **env)
 
 int	free_struct(t_minishell *shell)
 {
-	int	exit_status;
+	int			exit_status;
 
 	exit_status = shell->exit_status;
 	rl_clear_history();

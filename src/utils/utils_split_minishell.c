@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 21:52:51 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/10 22:33:51 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/10 23:42:47 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ char	**ft_split_minishell(char *line)
 
 	i = 0;
 	len_of_tab = count_tab_len(line);
-	ft_printf("len of tab = %d\n", len_of_tab);
 	tab = malloc((len_of_tab + 1) * sizeof(char *));
 	if (!tab)
 		return (NULL);
@@ -123,7 +122,6 @@ char	**ft_split_minishell(char *line)
 		while (ft_isspace(*line))
 			line++;
 		len_of_str = len_of_str_split(line);
-		ft_printf("len of str = %d\n", len_of_str);
 		tab[i] = malloc((len_of_str + 1) * sizeof(char));
 		add_char_to_tab(&(tab[i]), line, len_of_str);
 		line = line + len_of_str;
@@ -131,10 +129,5 @@ char	**ft_split_minishell(char *line)
 	}
 	tab[len_of_tab] = NULL;
 	i = 0;
-	while (tab[i])
-	{
-		ft_printf("%s\n", tab[i]);
-		i++;
-	}
 	return (tab);
 }

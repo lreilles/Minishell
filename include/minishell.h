@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/10 22:48:45 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/10 23:49:16 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void					separator_count(char *line, int *i, int *len,
 							int *add_len);
 int						ft_isspecial(int i, char *str);
 int						ft_issplit_cmd(char *str);
+void					ft_free_t_command(t_minishell *shell);
 // executing functions
 void					ft_execute_cmds(t_minishell *shell);
 #endif
