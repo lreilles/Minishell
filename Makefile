@@ -18,7 +18,9 @@ SRC_FILES = main.c \
 			parsing/verif_errors.c \
 			executing/execute.c \
 			parsing/creat_cmds.c \
-			utils/ft_free_t_command.c
+			utils/ft_free_t_command.c \
+			parsing/expand.c \
+			parsing/redirection.c \
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

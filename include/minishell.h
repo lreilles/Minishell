@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/10 23:49:16 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/11 06:32:56 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ char					**ft_split_minishell(char *line);
 int						verif_special_char(char **tab, t_minishell *shell);
 int						verif_error(char **tab, t_minishell *shell, char *line);
 t_command				*creat_cmds(t_minishell *shell);
-// void	parsing_redir(t_minishell *shell, char *line);
+char					*expand_variable(char *str, char **env);
+t_command				*redirection(t_minishell *shell);
 
 // utils functions
 int						ft_strcmp(const char *s1, const char *s2);
@@ -81,6 +82,7 @@ int						ft_isspace(int c);
 int						est_dans_charset(char c);
 int						ft_is_separator(char c);
 int						ft_is_quote(char c);
+int						ft_tablen(char **tab);
 void					skip_quotes(char *line, int *i, char quote);
 int						count_tab_len(char *line);
 void					increment_if_necessary(int *len, int *add_len);

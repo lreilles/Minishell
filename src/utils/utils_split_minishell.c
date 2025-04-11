@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 21:52:51 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/10 23:42:47 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/11 02:46:08 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char	**ft_split_minishell(char *line)
 		len_of_str = len_of_str_split(line);
 		tab[i] = malloc((len_of_str + 1) * sizeof(char));
 		add_char_to_tab(&(tab[i]), line, len_of_str);
-		line = line + len_of_str;
+		line += len_of_str;
 		i++;
 	}
 	tab[len_of_tab] = NULL;

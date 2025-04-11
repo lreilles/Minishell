@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:00:44 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/01 00:33:08 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/11 06:32:05 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,14 @@ void	ft_free_tab(char **tab)
 		i++;
 	}
 	free(tab);
+}
+
+int	ft_tablen(char **tab)
+{
+	int	len;
+
+	len = 0;
+	while (tab[len])
+		len++;
+	return (len);
 }
