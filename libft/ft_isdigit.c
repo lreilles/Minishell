@@ -17,6 +17,8 @@ int	ft_isdigit(int c)
 	return (c >= '0' && c <= '9');
 }
 
+// si faux return (0);
+// sinon return (1);
 // int	main(void)
 // {
 // 	int	i;
