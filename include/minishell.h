@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/11 06:32:56 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/12 04:09:35 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char					**ft_tabdup(char **tab);
 void					ft_free_tab(char **tab);
 void					init_struct(t_minishell **shell, char **env);
 int						free_struct(t_minishell *shell);
-void					close_fds(void);
+void					close_fds(int i);
 
 // parsing functions
 int						parsing(t_minishell *shell, char *line);
@@ -75,6 +75,7 @@ int						verif_error(char **tab, t_minishell *shell, char *line);
 t_command				*creat_cmds(t_minishell *shell);
 char					*expand_variable(char *str, char **env);
 t_command				*redirection(t_minishell *shell);
+void					delete_redirection(t_command *cmd, int *i);
 
 // utils functions
 int						ft_strcmp(const char *s1, const char *s2);

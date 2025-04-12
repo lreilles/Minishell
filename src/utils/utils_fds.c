@@ -6,17 +6,14 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:02:49 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/01 00:32:59 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/12 00:49:38 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	close_fds(void)
+void	close_fds(int i)
 {
-	int	i;
-
-	i = 0;
 	while (i < 1024)
 		close(i++);
 }

@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 16:08:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/10 04:41:45 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/12 00:51:51 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	minishell(t_minishell *shell)
 {
 	char	*line;
 
-	line = NULL;
 	while (true)
 	{
 		signals(SIGNAL_EXECUTE);
@@ -38,5 +37,6 @@ void	minishell(t_minishell *shell)
 		if (parsing(shell, line))
 			ft_execute_cmds(shell);
 		free(line);
+		close_fds(3);
 	}
 }

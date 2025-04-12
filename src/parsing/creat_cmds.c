@@ -6,11 +6,37 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 22:35:57 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/10 23:31:54 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/12 04:09:22 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	delete_redirection(t_command *cmd, int *i)
+{
+	char	**res;
+	int		j;
+	int		k;
+
+	j = 0;
+	k = 0;
+	res = malloc(sizeof(char *) * (ft_tablen(cmd->cmd) - 1));
+	if (!res)
+		return ;
+	while (j < (ft_tablen(cmd->cmd)))
+	{
+		if (j != (*i) && j != (*i) + 1)
+		{
+			res[k] = ft_strdup(cmd->cmd[j]);
+			k++;
+		}
+		j++;
+	}
+	res[k] = NULL;
+	(*i) = -1;
+	ft_free_tab(cmd->cmd);
+	cmd->cmd = res;
+}
 
 char	**ft_tab_j_to_i(char **args, int j, int i)
 {
