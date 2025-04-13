@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 01:22:22 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/11 04:22:06 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/13 02:48:16 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*s3;
 	size_t	i;
 
-	if (!s1 && !s2)
+	if (!s1 || !s2)
 		return (NULL);
 	len_s1 = ft_strlen(s1);
 	len_s3 = len_s1 + ft_strlen(s2) + 1;

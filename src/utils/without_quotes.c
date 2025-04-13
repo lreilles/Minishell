@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   without_quotes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 04:52:34 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/13 02:25:32 by lsellier         ###   ########.fr       */
+/*   Created: 2025/04/13 07:15:48 by lsellier          #+#    #+#             */
+/*   Updated: 2025/04/13 07:31:18 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_issplit_cmd(char *str)
+char	*without_quotes(char *str)
 {
-	if (!ft_strcmp(str, "|") || !ft_strcmp(str, "||") || !ft_strcmp(str, "&&"))
-		return (1);
-	return (0);
-}
+	char	*new_str;
+	int		i;
 
-int	counts_cms(t_command *cmd)
-{
-	int	count;
-
-	count = 0;
-	while (cmd)
+	if (str == NULL)
+		return (ft_strdup(""));
+	i = 0;
+	if (str[0] == '"' || str[0] == '\'')
 	{
-		cmd = cmd->next;
-		count++;
+		while (str[++i] != str[0] && str[i])
+			;
+		new_str = ft_substr(str, 1, i - 1);
 	}
-	return (count);
-}
-
-void	ft_execute_cmds(t_minishell *shell)
-{
-	ft_printf("nbr of cmd : %d\n", counts_cms(shell->cmds));
-	ft_free_t_command(shell);
-	ft_free_tab(shell->args);
+	else
+		new_str = ft_strdup(str);
+	return (new_str);
 }

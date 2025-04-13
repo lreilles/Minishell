@@ -6,12 +6,11 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:52:01 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/12 04:09:18 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/13 07:40:53 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
-
 
 t_command	*cmds_without_redir(t_minishell *shell)
 {
@@ -35,35 +34,13 @@ t_command	*cmds_without_redir(t_minishell *shell)
 	return (shell->cmds);
 }
 
-int	acess_file(char *file, int flags)
-{
-	int	fd;
-
-	if (flags == 1)
-	{
-		if (access(file, F_OK) == -1)
-			return (ft_dprintf(2, "minishell: %s: No such file or directory\n",
-					file), -1);
-		fd = open(file, O_RDONLY, 0644);
-	}
-	else if (flags == 3)
-		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (flags == 4)
-		fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else
-		return (-1);
-	if (fd == -1)
-		return (ft_dprintf(2, "minishell: %s: Permission denied\n", file), -1);
-	return (fd);
-}
-
 int	open_with_error(t_minishell *shell, t_command *cmd, char *file, int flags)
 {
 	if (flags <= 2)
 	{
 		if (shell->cmds->fd_in_put != -1)
 			close(shell->cmds->fd_in_put);
-		cmd->fd_in_put = acess_file(file, flags);
+		cmd->fd_in_put = acess_file(shell, file, flags);
 		if (cmd->fd_in_put == -1)
 			return (1);
 	}
@@ -71,18 +48,41 @@ int	open_with_error(t_minishell *shell, t_command *cmd, char *file, int flags)
 	{
 		if (shell->cmds->fd_out_put != -1)
 			close(shell->cmds->fd_out_put);
-		cmd->fd_out_put = acess_file(file, flags);
+		cmd->fd_out_put = acess_file(shell, file, flags);
 		if (cmd->fd_out_put == -1)
 			return (1);
 	}
 	return (0);
 }
 
+void	error_expand_redirect(char *cmd, t_minishell *shell)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	ft_printf("cmd = %s\n", cmd);
+	str = without_quotes(cmd);
+	if (ft_is_quote(cmd[0]) || strcmp(cmd, "$") == 0)
+	{
+		ft_dprintf(2, "minishell: %s: No such file or directory\n", str);
+		shell->exit_status = 1;
+	}
+	else
+	{
+		ft_dprintf(2, "minishell: %s: ambiguous redirect\n", str);
+		shell->exit_status = 1;
+	}
+	free(str);
+}
+
 int	open_redirection(t_minishell *shell, t_command *cmd, int i)
 {
 	char	*tmp;
 
-	tmp = expand_variable(cmd->cmd[i + 1], shell->env);
+	tmp = expand_variable(cmd->cmd[i + 1], shell->env, shell);
+	if (tmp[0] == '\0')
+		return (free(tmp), error_expand_redirect(cmd->cmd[i + 1], shell), 1);
 	if (cmd->cmd[i][0] == '<')
 	{
 		if (open_with_error(shell, cmd, tmp, 1) == 1)

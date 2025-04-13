@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   ft_counts_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 04:52:34 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/13 02:25:32 by lsellier         ###   ########.fr       */
+/*   Created: 2025/04/13 02:29:50 by lsellier          #+#    #+#             */
+/*   Updated: 2025/04/13 07:31:39 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_issplit_cmd(char *str)
-{
-	if (!ft_strcmp(str, "|") || !ft_strcmp(str, "||") || !ft_strcmp(str, "&&"))
-		return (1);
-	return (0);
-}
-
-int	counts_cms(t_command *cmd)
+int	ft_counts_cmds(t_command *cmd)
 {
 	int	count;
 
@@ -30,11 +23,4 @@ int	counts_cms(t_command *cmd)
 		count++;
 	}
 	return (count);
-}
-
-void	ft_execute_cmds(t_minishell *shell)
-{
-	ft_printf("nbr of cmd : %d\n", counts_cms(shell->cmds));
-	ft_free_t_command(shell);
-	ft_free_tab(shell->args);
 }

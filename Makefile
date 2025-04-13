@@ -21,6 +21,9 @@ SRC_FILES = main.c \
 			utils/ft_free_t_command.c \
 			parsing/expand.c \
 			parsing/redirection.c \
+			utils/ft_counts_cmds.c \
+			utils/open_files.c \
+			utils/without_quotes.c \
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

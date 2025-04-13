@@ -6,33 +6,34 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 02:03:12 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/11 06:09:49 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/13 06:47:53 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*get_env_value(char **env, char *str, int *i)
+char	*get_env_value(t_minishell *shell, char **env, char *str, int *i)
 {
 	int		k;
 	int		j;
 	char	*value;
 
 	k = 0;
+	if (str[0] == '?')
+		return ((*i)++, ft_itoa(shell->exit_status));
 	while (str[k] && str[k] != '$' && str[k] != '\'' && str[k] != '\"')
 	{
 		k++;
 		(*i)++;
 	}
 	value = ft_substr(str, 0, k);
-	j = 0;
-	while (env[j])
-	{
+	if (value[0] == '\0' || value[0] == '$')
+		return (free(value), ft_strdup(""));
+	j = -1;
+	while (env[++j])
 		if (ft_strncmp(env[j], value, ft_strlen(value)) == 0)
 			return (free(value), ft_strdup(env[j] + k + 1));
-		j++;
-	}
-	return (free(value), NULL);
+	return (free(value), ft_strdup(""));
 }
 
 char	*ft_strjoin_char(char *str, char c)
@@ -62,7 +63,8 @@ char	*ft_strjoin_char(char *str, char c)
 	return (new_str);
 }
 
-char	*expand_in_quote(char *expanded_str, char *str, int *i, char **env)
+char	*expand_in_quote(char *expanded_str, char *str, int *i,
+		t_minishell *shell)
 {
 	char	*value;
 	char	*tmp;
@@ -75,7 +77,7 @@ char	*expand_in_quote(char *expanded_str, char *str, int *i, char **env)
 			if (str[*i] == '$')
 			{
 				tmp = expanded_str;
-				value = get_env_value(env, str + *i + 1, i);
+				value = get_env_value(shell, shell->env, str + *i + 1, i);
 				expanded_str = ft_strjoin(tmp, value);
 				free(tmp);
 				free(value);
@@ -91,7 +93,7 @@ char	*expand_in_quote(char *expanded_str, char *str, int *i, char **env)
 	return (expanded_str);
 }
 
-char	*expand_variable(char *str, char **env)
+char	*expand_variable(char *str, char **env, t_minishell *shell)
 {
 	char	*expanded_str;
 	int		i;
@@ -103,11 +105,11 @@ char	*expand_variable(char *str, char **env)
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '"')
-			expanded_str = expand_in_quote(expanded_str, str, &i, env);
+			expanded_str = expand_in_quote(expanded_str, str, &i, shell);
 		else if (str[i] == '$')
 		{
 			tmp = expanded_str;
-			value = get_env_value(env, str + i + 1, &i);
+			value = get_env_value(shell, env, str + i + 1, &i);
 			expanded_str = ft_strjoin(tmp, value);
 			free(tmp);
 			free(value);
