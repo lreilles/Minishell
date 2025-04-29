@@ -32,9 +32,4 @@ void	ft_exit(char *tab)
 	free(tab);
 	ft_printf("%s\n", "exit");
 	exit(exit_code);
-//	if (tab[tab_of_len(tab)] != 1)
-//	{
-//		ft_dprintf(2, "exit : too many arguments\n");
-//		return ;
-//	}
 }
