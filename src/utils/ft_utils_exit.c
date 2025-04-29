@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ameduboi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 00:43:16 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/04/11 00:44:09 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/04/29 23:37:47 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int     tab_of_len(char **tab)
+int	tab_of_len(char **tab)
 {
-        int     i;
+	int	i;
 
-        i = 0;
-        while (tab[i])
-                i++;
-        return (i);
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }
