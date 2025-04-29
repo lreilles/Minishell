@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/13 07:40:13 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/28 06:27:25 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,16 @@ typedef struct s_minishell
 	int					exit_status;
 	int					nb_args;
 	char				**args;
+	struct s_pid		*pid_list;
 	struct s_command	*cmds;
+
 }						t_minishell;
+
+typedef struct s_pid
+{
+	pid_t				pid;
+	struct s_pid		*next;
+}						t_pid;
 
 typedef struct s_command
 {
@@ -83,6 +91,8 @@ int						ft_strcmp(const char *s1, const char *s2);
 int						ft_isspace(int c);
 int						est_dans_charset(char c);
 int						ft_is_separator(char c);
+char					*get_env_value(t_minishell *shell, char **env,
+							char *str, int *i);
 int						ft_is_quote(char c);
 int						ft_tablen(char **tab);
 void					skip_quotes(char *line, int *i, char quote);
@@ -96,6 +106,20 @@ char					*ft_strjoin_char(char *str, char c);
 int						ft_isspecial(int i, char *str);
 int						ft_issplit_cmd(char *str);
 void					ft_free_t_command(t_minishell *shell);
+int						ft_counts_cmds(t_command *cmd);
+void					skip_expand_null(char **cmd, t_minishell *shell,
+							int *i);
+void					ft_free_t_pid(t_pid *pid_list);
 // executing functions
 void					ft_execute_cmds(t_minishell *shell);
+void					ft_execute_lastcmd(t_command *cmd, t_minishell *shell,
+							int or_and);
+void					ft_execute_pipe(t_command *cmd, t_minishell *shell,
+							int or_and);
+void					ft_execute_or(t_command *cmd, t_minishell *shell,
+							int or_and);
+void					ft_execute_and(t_command *cmd, t_minishell *shell,
+							int or_and);
+void					ft_execute_cmd(t_command *cmd, t_minishell *shell,
+							int fd);
 #endif

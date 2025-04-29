@@ -6,11 +6,18 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 22:35:57 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/12 04:09:22 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/14 01:40:43 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	ft_issplit_cmd(char *str)
+{
+	if (!ft_strcmp(str, "|") || !ft_strcmp(str, "||") || !ft_strcmp(str, "&&"))
+		return (1);
+	return (0);
+}
 
 void	delete_redirection(t_command *cmd, int *i)
 {

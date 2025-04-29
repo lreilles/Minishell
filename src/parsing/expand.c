@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 02:03:12 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/13 06:47:53 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/04/28 23:41:33 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,11 @@ char	*expand_variable(char *str, char **env, t_minishell *shell)
 	char	*tmp;
 	char	*value;
 
-	i = 0;
+	i = -1;
+	if (str == NULL)
+		return (ft_strdup(""));
 	expanded_str = ft_strjoin_char(NULL, '\0');
-	while (str[i])
+	while (str[++i])
 	{
 		if (str[i] == '\'' || str[i] == '"')
 			expanded_str = expand_in_quote(expanded_str, str, &i, shell);
@@ -116,7 +118,6 @@ char	*expand_variable(char *str, char **env, t_minishell *shell)
 		}
 		else
 			expanded_str = ft_strjoin_char(expanded_str, str[i]);
-		i++;
 	}
 	return (expanded_str);
 }
@@ -124,10 +125,13 @@ char	*expand_variable(char *str, char **env, t_minishell *shell)
 // int	main(int ac, char **av, char **env)
 // {
 // 	char	*str;
+// 	t_minishell	*shell;
 
 // 	(void)ac;
 // 	(void)av;
-// 	str = expand_variable("\"$USER\"\'$USER\'\"\'\"\'\"\'", env);
+// 	shell = malloc(sizeof(t_minishell));
+// 	shell->env = env;
+// 	str = expand_variable("\"$USER\"\'$USER\'\"\'\"\'\"\'", env, shell);
 // 	ft_printf("expanded = %s\n", str);
 // 	free(str);
 // }
