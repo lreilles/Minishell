@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ameduboi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 22:48:39 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/04/30 02:55:04 by ameduboi         ###   ########.fr       */
+/*   Created: 2025/04/29 22:32:35 by ameduboi          #+#    #+#             */
+/*   Updated: 2025/04/29 23:38:39 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	env(t_minishell *minishell)
+int	cd(char **env)
 {
-	int	i;
+	int		fd;
+	const char	*path;
 
-	i = 0;
-	while (minishell->env[i] != NULL)
-	{
-		ft_printf("%s\n", minishell->env[i]);
-		i++;
-	}
+	
+	return (chdir(path))
 }

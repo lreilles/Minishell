@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ameduboi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/02 22:48:39 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/04/30 02:55:04 by ameduboi         ###   ########.fr       */
+/*   Created: 2025/04/29 22:21:44 by ameduboi          #+#    #+#             */
+/*   Updated: 2025/04/30 02:36:07 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	env(t_minishell *minishell)
+void	ft_export(t_minishell *minishell, char **export)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	**new_env;
 
 	i = 0;
-	while (minishell->env[i] != NULL)
+	j = 0;
+	while (minishell->env[i])
+		minishell->env[i++];
+	while (export[j])
+		j++;
+	new_env = malloc(i + j + 1 * sizeof(char *));
+	while ()
 	{
-		ft_printf("%s\n", minishell->env[i]);
-		i++;
+		
 	}
 }
