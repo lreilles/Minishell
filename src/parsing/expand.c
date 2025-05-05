@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 02:03:12 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/28 23:41:33 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/02 04:52:28 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,17 +121,3 @@ char	*expand_variable(char *str, char **env, t_minishell *shell)
 	}
 	return (expanded_str);
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	char	*str;
-// 	t_minishell	*shell;
-
-// 	(void)ac;
-// 	(void)av;
-// 	shell = malloc(sizeof(t_minishell));
-// 	shell->env = env;
-// 	str = expand_variable("\"$USER\"\'$USER\'\"\'\"\'\"\'", env, shell);
-// 	ft_printf("expanded = %s\n", str);
-// 	free(str);
-// }

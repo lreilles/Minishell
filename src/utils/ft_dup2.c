@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_t_command.c                                :+:      :+:    :+:   */
+/*   ft_dup2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 23:46:52 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/04 13:48:00 by lsellier         ###   ########.fr       */
+/*   Created: 2025/05/04 13:17:52 by lsellier          #+#    #+#             */
+/*   Updated: 2025/05/04 14:55:54 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_free_t_command(t_minishell *shell)
+int	ft_dup2(t_command *cmd)
 {
-	t_command	*tmp;
-	t_pid		*tmp_pid;
-
-	while (shell->cmds)
+	if (cmd->fd_in_put != 0)
 	{
-		ft_free_tab(shell->cmds->cmd);
-		tmp = shell->cmds->next;
-		free(shell->cmds);
-		shell->cmds = tmp;
+		if (dup2(cmd->fd_in_put, 0) == -1)
+			return (close_fds(2), ft_dprintf(2, "minishell: dup2 failed\n"), 1);
+		close(cmd->fd_in_put);
 	}
-	if (shell->pid_list)
+	if (cmd->fd_out_put != 1)
 	{
-		while (shell->pid_list)
-		{
-			tmp_pid = shell->pid_list;
-			shell->pid_list = shell->pid_list->next;
-			free(tmp_pid);
-		}
+		if (dup2(cmd->fd_out_put, 1) == -1)
+			return (close_fds(2), ft_dprintf(2, "minishell: dup2 failed\n"), 1);
+		close(cmd->fd_out_put);
 	}
-	shell->pid_list = NULL;
+	return (0);
 }

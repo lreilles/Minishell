@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/28 06:27:25 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:53:54 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ char					**ft_tabdup(char **tab);
 void					ft_free_tab(char **tab);
 void					init_struct(t_minishell **shell, char **env);
 int						free_struct(t_minishell *shell);
-void					close_fds(int i);
+void					close_fds(int fd);
+void					close_fds_without(int fd, int fd_in, int fd_out);
 
 // parsing functions
 int						parsing(t_minishell *shell, char *line);
@@ -110,6 +111,7 @@ int						ft_counts_cmds(t_command *cmd);
 void					skip_expand_null(char **cmd, t_minishell *shell,
 							int *i);
 void					ft_free_t_pid(t_pid *pid_list);
+int						ft_dup2(t_command *cmd);
 // executing functions
 void					ft_execute_cmds(t_minishell *shell);
 void					ft_execute_lastcmd(t_command *cmd, t_minishell *shell,
@@ -117,9 +119,20 @@ void					ft_execute_lastcmd(t_command *cmd, t_minishell *shell,
 void					ft_execute_pipe(t_command *cmd, t_minishell *shell,
 							int or_and);
 void					ft_execute_or(t_command *cmd, t_minishell *shell,
-							int or_and);
+							int or_and, int ispipe);
 void					ft_execute_and(t_command *cmd, t_minishell *shell,
-							int or_and);
-void					ft_execute_cmd(t_command *cmd, t_minishell *shell,
-							int fd);
+							int or_and, int ispipe);
+void					ft_execute_cmd(t_command *cmd, t_minishell *shell);
+void					ft_execute_builtin(t_minishell *shell, t_command *cmd);
+int						ft_isbuiltin(t_command *cmd, t_minishell *shell);
+void					ft_execute_builtin_pipe(t_minishell *shell,
+							t_command *cmd);
+void					new_cmd_expand(char ***cmd, t_minishell *shell);
+void					ft_execute_with_fork(t_command *cmd,
+							t_minishell *shell);
+void					ft_wait_pid_exit_status(t_minishell *shell);
+// built-in functions
+void					ft_echo(char **str, int flag);
+int						ft_parse_echo(t_minishell *shell, t_command *cmd);
+
 #endif

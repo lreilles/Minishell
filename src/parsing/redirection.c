@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:52:01 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/13 07:40:53 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/02 04:47:01 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,6 @@ t_command	*redirection(t_minishell *shell)
 		tmp = tmp->next;
 	}
 	if (error == 1)
-		return (close_fds(3), ft_free_t_command(shell), NULL);
+		return (NULL);
 	return (cmds_without_redir(shell));
 }

@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 22:35:57 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/14 01:40:43 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/04 12:07:22 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ t_command	*creat_cmds(t_minishell *shell)
 			tmp = malloc(sizeof(t_command));
 			tmp->cmd = ft_tab_j_to_i(shell->args, j, i);
 			tmp->next = NULL;
-			tmp->fd_in_put = -1;
-			tmp->fd_out_put = -1;
+			tmp->fd_in_put = 0;
+			tmp->fd_out_put = 1;
 			tmp->pid = -1;
 			ft_add_cmd(&cmd, tmp);
 			j = i + 1;

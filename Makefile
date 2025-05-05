@@ -25,6 +25,11 @@ SRC_FILES = main.c \
 			utils/open_files.c \
 			utils/without_quotes.c \
 			executing/ft_isbuiltin.c \
+			built-in/ft_echo.c \
+			executing/ft_parse_echo.c \
+			executing/new_cmd_expand.c \
+			executing/execute_cmd_execve.c \
+			utils/ft_dup2.c \
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
