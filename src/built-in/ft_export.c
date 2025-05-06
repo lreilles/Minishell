@@ -6,13 +6,13 @@
 /*   By: ameduboi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:21:44 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/04/30 22:55:42 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/05/06 18:17:08 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_export(t_minishell *minishell, char **export)
+void	ft_export_with_value(t_minishell *minishell, char **export)
 {
 	int		i;
 	int		j;
