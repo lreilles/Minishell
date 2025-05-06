@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 02:03:12 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/02 04:52:28 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:53:57 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,13 @@ char	*get_env_value(t_minishell *shell, char **env, char *str, int *i)
 		return (free(value), ft_strdup(""));
 	j = -1;
 	while (env[++j])
+	{
 		if (ft_strncmp(env[j], value, ft_strlen(value)) == 0)
-			return (free(value), ft_strdup(env[j] + k + 1));
+		{
+			if (env[j][ft_strlen(value)] == '=')
+				return (free(value), ft_strdup(env[j] + k + 1));
+		}
+	}
 	return (free(value), ft_strdup(""));
 }
 

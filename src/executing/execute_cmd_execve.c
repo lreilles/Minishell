@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:06:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/04 16:22:04 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:35:21 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_execute_cmd(t_command *cmd, t_minishell *shell)
 	char	**env;
 	char	**cmd_exec;
 
-	redirection(shell);
+	redirection(shell, cmd);
 	error = 0;
 	fds[0] = cmd->fd_in_put;
 	fds[1] = cmd->fd_out_put;

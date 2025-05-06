@@ -6,32 +6,25 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:52:01 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/02 04:47:01 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:13:07 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_command	*cmds_without_redir(t_minishell *shell)
+void	cmds_without_redir(t_command *cmds)
 {
-	t_command	*tmp;
-	int			i;
+	int	i;
 
-	tmp = shell->cmds;
-	while (tmp)
+	i = 0;
+	while (cmds->cmd[i])
 	{
-		i = 0;
-		while (tmp->cmd[i])
-		{
-			if (ft_strcmp(tmp->cmd[i], "<") == 0 || ft_strcmp(tmp->cmd[i],
-					">") == 0 || ft_strcmp(tmp->cmd[i], "<<") == 0
-				|| ft_strcmp(tmp->cmd[i], ">>") == 0)
-				delete_redirection(tmp, &i);
-			i++;
-		}
-		tmp = tmp->next;
+		if (ft_strcmp(cmds->cmd[i], "<") == 0 || ft_strcmp(cmds->cmd[i],
+				">") == 0 || ft_strcmp(cmds->cmd[i], "<<") == 0
+			|| ft_strcmp(cmds->cmd[i], ">>") == 0)
+			delete_redirection(cmds, &i);
+		i++;
 	}
-	return (shell->cmds);
 }
 
 int	open_with_error(t_minishell *shell, t_command *cmd, char *file, int flags)
@@ -61,7 +54,6 @@ void	error_expand_redirect(char *cmd, t_minishell *shell)
 	char	*str;
 
 	i = 0;
-	ft_printf("cmd = %s\n", cmd);
 	str = without_quotes(cmd);
 	if (ft_is_quote(cmd[0]) || strcmp(cmd, "$") == 0)
 	{
@@ -78,55 +70,54 @@ void	error_expand_redirect(char *cmd, t_minishell *shell)
 
 int	open_redirection(t_minishell *shell, t_command *cmd, int i)
 {
-	char	*tmp;
+	char	**tmp;
 
-	tmp = expand_variable(cmd->cmd[i + 1], shell->env, shell);
-	if (tmp[0] == '\0')
-		return (free(tmp), error_expand_redirect(cmd->cmd[i + 1], shell), 1);
+	tmp = expand_variable2(cmd->cmd[i + 1], shell);
+	if (tmp == NULL)
+		return (1);
+	if (ft_tablen(tmp) > 1)
+		return (ft_free_tab(tmp), ft_dprintf(2, "minishell: "
+				"%s: ambiguous redirect\n", cmd->cmd[i + 1]), 1);
+	if (tmp[0][0] == '\0')
+		return (ft_free_tab(tmp), error_expand_redirect(cmd->cmd[i + 1], shell),
+			1);
 	if (cmd->cmd[i][0] == '<')
 	{
-		if (open_with_error(shell, cmd, tmp, 1) == 1)
-			return (free(tmp), 1);
+		if (open_with_error(shell, cmd, tmp[0], 1) == 1)
+			return (ft_free_tab(tmp), 1);
 	}
 	else if (cmd->cmd[i][0] == '>')
 	{
-		if (open_with_error(shell, cmd, tmp, 3) == 1)
-			return (free(tmp), 1);
+		if (open_with_error(shell, cmd, tmp[0], 3) == 1)
+			return (ft_free_tab(tmp), 1);
 	}
 	else if (ft_strcmp(cmd->cmd[i], ">>"))
-	{
-		if (open_with_error(shell, cmd, tmp, 4) == 1)
-			return (free(tmp), 1);
-	}
-	free(tmp);
+		if (open_with_error(shell, cmd, tmp[0], 4) == 1)
+			return (ft_free_tab(tmp), 1);
+	ft_free_tab(tmp);
 	return (0);
 }
 
-t_command	*redirection(t_minishell *shell)
+int	redirection(t_minishell *shell, t_command *cmds)
 {
-	t_command	*tmp;
-	int			i;
-	int			error;
+	int	i;
+	int	error;
 
-	tmp = shell->cmds;
 	error = 0;
-	while (tmp)
+	i = -1;
+	while (cmds->cmd[++i])
 	{
-		i = -1;
-		while (tmp->cmd[++i])
-		{
-			if (ft_strcmp(tmp->cmd[i], "<") == 0)
-				error = open_redirection(shell, tmp, i);
-			else if (ft_strcmp(tmp->cmd[i], ">") == 0)
-				error = open_redirection(shell, tmp, i);
-			else if (ft_strcmp(tmp->cmd[i], ">>") == 0)
-				error = open_redirection(shell, tmp, i);
-			if (error == 1)
-				break ;
-		}
-		tmp = tmp->next;
+		if (ft_strcmp(cmds->cmd[i], "<") == 0)
+			error = open_redirection(shell, cmds, i);
+		else if (ft_strcmp(cmds->cmd[i], ">") == 0)
+			error = open_redirection(shell, cmds, i);
+		else if (ft_strcmp(cmds->cmd[i], ">>") == 0)
+			error = open_redirection(shell, cmds, i);
+		if (error == 1)
+			break ;
 	}
 	if (error == 1)
-		return (NULL);
-	return (cmds_without_redir(shell));
+		return (0);
+	cmds_without_redir(cmds);
+	return (1);
 }

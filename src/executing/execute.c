@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 04:52:34 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/04 13:53:49 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/06 01:21:48 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,11 @@ int	ft_waitpid(t_minishell *shell, int or_and)
 void	ft_wait_pid_exit_status(t_minishell *shell)
 {
 	int		status;
-	// t_pid	*tmp;
 
 	if (!shell->pid_list)
 		return ;
 	ft_wait_all_pid_without_last(shell);
-	// tmp = shell->pid_list;
 	waitpid(shell->pid_list->pid, &status, 0);
-	// free(tmp);
 	shell->exit_status = WEXITSTATUS(status);
 }
 
@@ -310,4 +307,13 @@ void	ft_execute_cmds(t_minishell *shell)
 	ft_free_t_command(shell);
 	ft_free_tab(shell->args);
 	close_fds(3);
+		int	i;
+
+	for (i = 0; i < getdtablesize(); i++)
+	{
+		if (fcntl(i, F_GETFD) != -1)
+		{
+			ft_dprintf(2, "Error: File descriptor %d is still open\n", i);
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/04 14:53:54 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/06 01:12:14 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,11 @@ int						verif_error(char **tab, t_minishell *shell, char *line);
 t_command				*creat_cmds(t_minishell *shell);
 char					*expand_variable(char *str, char **env,
 							t_minishell *shell);
-t_command				*redirection(t_minishell *shell);
+char					**expand_variable2(char *str, t_minishell *shell);
+int						redirection(t_minishell *shell, t_command *cmd);
 void					delete_redirection(t_command *cmd, int *i);
-
+char					*expand_in_quote(char *expanded_str, char *str, int *i,
+							t_minishell *shell);
 // utils functions
 int						ft_strcmp(const char *s1, const char *s2);
 int						ft_isspace(int c);
@@ -112,6 +114,9 @@ void					skip_expand_null(char **cmd, t_minishell *shell,
 							int *i);
 void					ft_free_t_pid(t_pid *pid_list);
 int						ft_dup2(t_command *cmd);
+void					ft_free_before_exit(t_minishell *shell, int fd_in,
+							int fd_out);
+char					*ft_strjoin_check(char *str1, char *str2);
 // executing functions
 void					ft_execute_cmds(t_minishell *shell);
 void					ft_execute_lastcmd(t_command *cmd, t_minishell *shell,
@@ -134,5 +139,6 @@ void					ft_wait_pid_exit_status(t_minishell *shell);
 // built-in functions
 void					ft_echo(char **str, int flag);
 int						ft_parse_echo(t_minishell *shell, t_command *cmd);
-
+void					env(char **env);
+int						ft_parse_env(t_minishell *shell, t_command *cmd);
 #endif

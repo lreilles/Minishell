@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin_with_NULL.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/30 21:08:35 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/06 01:14:55 by lsellier         ###   ########.fr       */
+/*   Created: 2025/05/06 01:03:47 by lsellier          #+#    #+#             */
+/*   Updated: 2025/05/06 01:11:53 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	main(int ac, char **av)
+char	*ft_strjoin_check(char *str1, char *str2)
 {
-	t_minishell	*shell;
-
-	signals(SIGNAL_IGN);
-	rl_outstream = stderr;
-	init_struct(&shell, av + ac + 1);
-	minishell(shell);
-	close_fds(0);
-	return (free_struct(shell));
+	if (!str1 && !str2)
+		return (ft_strdup(""));
+	if (!str1)
+		return (ft_strdup(str2));
+	if (!str2)
+		return (ft_strdup(str1));
+	return (ft_strjoin(str1, str2));
 }

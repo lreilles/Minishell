@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_parse_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/30 21:08:35 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/06 01:14:55 by lsellier         ###   ########.fr       */
+/*   Created: 2025/05/05 15:51:37 by lsellier          #+#    #+#             */
+/*   Updated: 2025/05/05 16:35:38 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	main(int ac, char **av)
+int	ft_parse_env(t_minishell *shell, t_command *cmd)
 {
-	t_minishell	*shell;
-
-	signals(SIGNAL_IGN);
-	rl_outstream = stderr;
-	init_struct(&shell, av + ac + 1);
-	minishell(shell);
-	close_fds(0);
-	return (free_struct(shell));
+	redirection(shell, cmd);
+	if (ft_dup2(cmd))
+		return (1);
+	new_cmd_expand(&cmd->cmd, shell);
+	env(shell->env);
+	return (0);
 }
