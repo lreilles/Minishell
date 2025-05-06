@@ -24,7 +24,7 @@ int	ft_echo(char **str, int flag)
 			ft_printf(" ");
 		verif = ft_printf("%s", str[i]);
 		if (verif < 0)
-			return (1)
+			return (1);
 		i++;
 	}
 	if (flag == 0)
