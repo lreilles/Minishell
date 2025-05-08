@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/06 01:12:14 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/08 07:47:55 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_minishell
 {
 	char				**env;
 	char				*line;
+	int					exit;
 	int					exit_status;
 	int					nb_args;
 	char				**args;
@@ -82,9 +83,7 @@ char					**ft_split_minishell(char *line);
 int						verif_special_char(char **tab, t_minishell *shell);
 int						verif_error(char **tab, t_minishell *shell, char *line);
 t_command				*creat_cmds(t_minishell *shell);
-char					*expand_variable(char *str, char **env,
-							t_minishell *shell);
-char					**expand_variable2(char *str, t_minishell *shell);
+char					**expand_variable(char *str, t_minishell *shell);
 int						redirection(t_minishell *shell, t_command *cmd);
 void					delete_redirection(t_command *cmd, int *i);
 char					*expand_in_quote(char *expanded_str, char *str, int *i,
@@ -100,6 +99,11 @@ int						ft_is_quote(char c);
 int						ft_tablen(char **tab);
 void					skip_quotes(char *line, int *i, char quote);
 int						count_tab_len(char *line);
+int						have_len_tab_expand(char *str, t_minishell *shell);
+void					add_to_expanded_tab(t_minishell *shell, char *str,
+							int *n[2], char **expanded_tab);
+char					**get_env_value2(t_minishell *shell, char **env,
+							char *str, int *i);
 void					increment_if_necessary(int *len, int *add_len);
 void					separator_count(char *line, int *i, int *len,
 							int *add_len);
@@ -117,6 +121,9 @@ int						ft_dup2(t_command *cmd);
 void					ft_free_before_exit(t_minishell *shell, int fd_in,
 							int fd_out);
 char					*ft_strjoin_check(char *str1, char *str2);
+char					*ft_get_path(char *cmd, char **env);
+int						ft_verif_is_directory(char **cmd_exec, char **env);
+char					*my_getenv(char **env);
 // executing functions
 void					ft_execute_cmds(t_minishell *shell);
 void					ft_execute_lastcmd(t_command *cmd, t_minishell *shell,
@@ -136,9 +143,17 @@ void					new_cmd_expand(char ***cmd, t_minishell *shell);
 void					ft_execute_with_fork(t_command *cmd,
 							t_minishell *shell);
 void					ft_wait_pid_exit_status(t_minishell *shell);
+void					ft_wait_all_pid_without_last(t_minishell *shell);
+int						ft_waitpid(t_minishell *shell, int or_and);
+t_pid					*ft_add_pid(t_pid *pid_list, pid_t pid);
+int						*have_static_int(int nbr);
+void					ft_chose_next_separator(t_command *cmd,
+							t_minishell *shell, int or_and);
+void					ft_chose_next_separator_pipe(t_command *cmd,
+							t_minishell *shell, int or_and);
 // built-in functions
-void					ft_echo(char **str, int flag);
+int						ft_echo(char **str, int flag);
 int						ft_parse_echo(t_minishell *shell, t_command *cmd);
-void					env(char **env);
+int						env(t_minishell *minishell);
 int						ft_parse_env(t_minishell *shell, t_command *cmd);
 #endif

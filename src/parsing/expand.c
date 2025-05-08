@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 02:03:12 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/05 23:53:57 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/07 04:58:29 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,31 +98,30 @@ char	*expand_in_quote(char *expanded_str, char *str, int *i,
 	return (expanded_str);
 }
 
-char	*expand_variable(char *str, char **env, t_minishell *shell)
+char	**expand_variable(char *str, t_minishell *shell)
 {
-	char	*expanded_str;
+	char	**expanded_tab;
 	int		i;
-	char	*tmp;
-	char	*value;
+	int		j;
 
 	i = -1;
+	j = 0;
 	if (str == NULL)
-		return (ft_strdup(""));
-	expanded_str = ft_strjoin_char(NULL, '\0');
+		return (NULL);
+	if (!have_len_tab_expand(str, shell))
+		return (NULL);
+	expanded_tab = malloc(sizeof(char *) * (have_len_tab_expand(str, shell)
+				+ 1));
+	expanded_tab[have_len_tab_expand(str, shell)] = NULL;
+	expanded_tab[j] = ft_strdup("");
 	while (str[++i])
 	{
 		if (str[i] == '\'' || str[i] == '"')
-			expanded_str = expand_in_quote(expanded_str, str, &i, shell);
+			expanded_tab[j] = expand_in_quote(expanded_tab[j], str, &i, shell);
 		else if (str[i] == '$')
-		{
-			tmp = expanded_str;
-			value = get_env_value(shell, env, str + i + 1, &i);
-			expanded_str = ft_strjoin(tmp, value);
-			free(tmp);
-			free(value);
-		}
+			add_to_expanded_tab(shell, str, ((int *[]){&i, &j}), expanded_tab);
 		else
-			expanded_str = ft_strjoin_char(expanded_str, str[i]);
+			expanded_tab[j] = ft_strjoin_char(expanded_tab[j], str[i]);
 	}
-	return (expanded_str);
+	return (expanded_tab);
 }

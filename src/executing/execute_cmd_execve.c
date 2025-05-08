@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:06:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/05 16:35:21 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/08 07:20:26 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,53 +23,60 @@ void	ft_free_before_exit(t_minishell *shell, int fd_in, int fd_out)
 	rl_clear_history();
 }
 
-char	*my_getenv(char **env)
+void	ft_execve_without_path(char **cmd_exec, char **env)
 {
-	int	i;
+	signals(SIGNAL_DEFAULT);
+	execve(cmd_exec[0], cmd_exec, NULL);
+	signals(SIGNAL_IGN);
+	ft_dprintf(2, "minishell: %s: No such file or directory\n", cmd_exec[0]);
+	ft_free_tab(env);
+	ft_free_tab(cmd_exec);
+	close_fds(0);
+	exit(127);
+}
 
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-			return (env[i] + 5);
-		i++;
-	}
-	ft_dprintf(2, "Error: PATH not found\n");
-	return (NULL);
+void	ft_execve_with_path(char **cmd_exec, char **env)
+{
+	signals(SIGNAL_DEFAULT);
+	execve(cmd_exec[0], cmd_exec, env);
+	signals(SIGNAL_IGN);
+	ft_dprintf(2, "minishell: %s: command not found\n", cmd_exec[0]);
+	ft_free_tab(env);
+	ft_free_tab(cmd_exec);
+	close_fds(0);
+	exit(127);
+}
+
+void	ft_chose_execve(char **cmd_exec, char **env)
+{
+	char	*path;
+
+	ft_verif_is_directory(cmd_exec, env);
+	path = my_getenv(env);
+	if (path == NULL || ft_strchr(cmd_exec[0], '/') != NULL)
+		ft_execve_without_path(cmd_exec, env);
+	path = ft_get_path(cmd_exec[0], env);
+	free(cmd_exec[0]);
+	cmd_exec[0] = path;
+	ft_execve_with_path(cmd_exec, env);
 }
 
 void	ft_execute_cmd(t_command *cmd, t_minishell *shell)
 {
-	int		fds[2];
-	int		error;
 	char	**env;
 	char	**cmd_exec;
+	int		exit_code;
 
+	exit_code = 0;
 	redirection(shell, cmd);
-	error = 0;
-	fds[0] = cmd->fd_in_put;
-	fds[1] = cmd->fd_out_put;
 	if (ft_dup2(cmd))
 	{
 		ft_free_before_exit(shell, -1, -1);
 		exit(1);
 	}
 	new_cmd_expand(&cmd->cmd, shell);
-	// error = ft_get_path(&cmd->cmd, shell->env, &cmd_exec);
 	cmd_exec = ft_tabdup(cmd->cmd);
 	env = ft_tabdup(shell->env);
 	ft_free_before_exit(shell, cmd->fd_in_put, cmd->fd_out_put);
-	ft_dprintf(2, "test = %s, %i\n", cmd_exec[0], error);
-	if (!error)
-	{
-		signals(SIGNAL_DEFAULT);
-		execve(cmd_exec[0], cmd_exec, env);
-		ft_dprintf(2, "minishell: %s: command not found\n", cmd_exec[0]);
-		error = 127;
-	}
-	ft_free_tab(cmd_exec);
-	ft_free_tab(env);
-	close(fds[0]);
-	close(fds[1]);
-	exit(error);
+	ft_chose_execve(cmd_exec, env);
 }

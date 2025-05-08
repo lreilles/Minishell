@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:17:52 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/04 14:55:54 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/07 04:14:01 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	ft_dup2(t_command *cmd)
 	if (cmd->fd_in_put != 0)
 	{
 		if (dup2(cmd->fd_in_put, 0) == -1)
-			return (close_fds(2), ft_dprintf(2, "minishell: dup2 failed\n"), 1);
+			return (close_fds(3), ft_dprintf(2, "minishell: dup2 failed\n"), 1);
 		close(cmd->fd_in_put);
 	}
 	if (cmd->fd_out_put != 1)
 	{
 		if (dup2(cmd->fd_out_put, 1) == -1)
-			return (close_fds(2), ft_dprintf(2, "minishell: dup2 failed\n"), 1);
+			return (close_fds(3), ft_dprintf(2, "minishell: dup2 failed\n"), 1);
 		close(cmd->fd_out_put);
 	}
 	return (0);

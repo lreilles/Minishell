@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:09:05 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/05 23:12:27 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/08 07:51:41 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,59 +14,70 @@
 
 int	parse_nothing(t_minishell *shell, t_command *cmd)
 {
+	int	tmp[2];
+
 	if (!redirection(shell, cmd))
 		return (1);
+	tmp[0] = dup(0);
+	tmp[1] = dup(1);
 	if (ft_dup2(cmd))
 		return (1);
+	dup2(tmp[0], 0);
+	dup2(tmp[1], 1);
+	close_fds(3);
+	close(tmp[0]);
+	close(tmp[1]);
 	return (0);
 }
 
 void	skip_expand_null(char **cmd, t_minishell *shell, int *i)
 {
-	char	*tmp;
+	char	**tmp;
 
 	while (cmd[*i])
 	{
-		tmp = expand_variable(cmd[*i], shell->env, shell);
+		tmp = expand_variable(cmd[*i], shell);
 		if (ft_strcmp(cmd[*i], ">") == 0)
 			(*i)++;
 		else if (ft_strcmp(cmd[*i], ">>") == 0)
 			(*i)++;
 		else if (ft_strcmp(cmd[*i], "<") == 0)
 			(*i)++;
-		else if ((tmp != NULL && ft_strcmp(tmp, "") != 0) || ft_strncmp(cmd[*i],
-				"$", 1) != 0)
-			return ((void)free(tmp));
+		else if (ft_strcmp(cmd[*i], "<<") == 0)
+			(*i)++;
+		else if ((tmp[0] != NULL && ft_strcmp(tmp[0], "") != 0)
+			|| ft_strncmp(cmd[*i], "$", 1) != 0)
+			return (ft_free_tab(tmp));
 		(*i)++;
-		free(tmp);
+		ft_free_tab(tmp);
 	}
 }
 
 int	ft_isbuiltin(t_command *cmd, t_minishell *shell)
 {
 	int		i;
-	char	*tmp;
+	char	**tmp;
 
 	i = 0;
 	skip_expand_null(cmd->cmd, shell, &i);
-	tmp = expand_variable(cmd->cmd[i], shell->env, shell);
+	tmp = expand_variable(cmd->cmd[i], shell);
 	if (i == ft_tablen(cmd->cmd))
-		return (free(tmp), 1);
-	else if (ft_strcmp(tmp, "cd") == 0)
-		return (free(tmp), 2);
-	else if (ft_strcmp(tmp, "echo") == 0)
-		return (free(tmp), 3);
-	else if (ft_strcmp(tmp, "env") == 0)
-		return (free(tmp), 4);
-	else if (ft_strcmp(tmp, "exit") == 0)
-		return (free(tmp), 5);
-	else if (ft_strcmp(tmp, "export") == 0)
-		return (free(tmp), 6);
-	else if (ft_strcmp(tmp, "pwd") == 0)
-		return (free(tmp), 7);
-	else if (ft_strcmp(tmp, "unset") == 0)
-		return (free(tmp), 8);
-	return (free(tmp), 0);
+		return (ft_free_tab(tmp), 1);
+	else if (ft_strcmp(tmp[0], "cd") == 0)
+		return (ft_free_tab(tmp), 2);
+	else if (ft_strcmp(tmp[0], "echo") == 0)
+		return (ft_free_tab(tmp), 3);
+	else if (ft_strcmp(tmp[0], "env") == 0)
+		return (ft_free_tab(tmp), 4);
+	else if (ft_strcmp(tmp[0], "exit") == 0)
+		return (ft_free_tab(tmp), 5);
+	else if (ft_strcmp(tmp[0], "export") == 0)
+		return (ft_free_tab(tmp), 6);
+	else if (ft_strcmp(tmp[0], "pwd") == 0)
+		return (ft_free_tab(tmp), 7);
+	else if (ft_strcmp(tmp[0], "unset") == 0)
+		return (ft_free_tab(tmp), 8);
+	return (ft_free_tab(tmp), 0);
 }
 
 void	ft_execute_builtin(t_minishell *shell, t_command *cmd)
@@ -93,7 +104,7 @@ void	ft_execute_builtin_pipe(t_minishell *shell, t_command *cmd)
 	builtin = ft_isbuiltin(cmd, shell);
 	exit_status = 0;
 	if (builtin == 1)
-		exit_status = 0;
+		exit_status = parse_nothing(shell, cmd);
 	// else if (builtin == 2)
 	// 	exit_status = ft_cd(shell, cmd);
 	else if (builtin == 3)
@@ -108,11 +119,7 @@ void	ft_execute_builtin_pipe(t_minishell *shell, t_command *cmd)
 	// 	exit_status = ft_pwd(shell, cmd);
 	// else if (builtin == 8)
 	// 	exit_status = ft_unset(shell, cmd);
+	ft_free_before_exit(shell, -1, -1);
 	close_fds(0);
-	ft_free_tab(shell->args);
-	ft_free_tab(shell->env);
-	ft_free_t_command(shell);
-	free(shell->line);
-	free(shell);
 	exit(exit_status);
 }

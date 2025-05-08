@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:52:01 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/05 23:13:07 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/07 04:43:29 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,24 @@ int	open_with_error(t_minishell *shell, t_command *cmd, char *file, int flags)
 {
 	if (flags <= 2)
 	{
-		if (shell->cmds->fd_in_put != -1)
+		if (shell->cmds->fd_in_put != 0 && shell->cmds->fd_in_put != -1)
 			close(shell->cmds->fd_in_put);
 		cmd->fd_in_put = acess_file(shell, file, flags);
-		if (cmd->fd_in_put == -1)
+		if (cmd->fd_in_put == 0)
 			return (1);
 	}
 	else
 	{
-		if (shell->cmds->fd_out_put != -1)
+		if (shell->cmds->fd_out_put != 1 && shell->cmds->fd_out_put != -1)
 			close(shell->cmds->fd_out_put);
 		cmd->fd_out_put = acess_file(shell, file, flags);
-		if (cmd->fd_out_put == -1)
+		if (cmd->fd_out_put == 1)
 			return (1);
 	}
 	return (0);
 }
 
-void	error_expand_redirect(char *cmd, t_minishell *shell)
+void	expand_redirect(char *cmd, t_minishell *shell)
 {
 	int		i;
 	char	*str;
@@ -72,15 +72,14 @@ int	open_redirection(t_minishell *shell, t_command *cmd, int i)
 {
 	char	**tmp;
 
-	tmp = expand_variable2(cmd->cmd[i + 1], shell);
+	tmp = expand_variable(cmd->cmd[i + 1], shell);
 	if (tmp == NULL)
 		return (1);
 	if (ft_tablen(tmp) > 1)
 		return (ft_free_tab(tmp), ft_dprintf(2, "minishell: "
 				"%s: ambiguous redirect\n", cmd->cmd[i + 1]), 1);
 	if (tmp[0][0] == '\0')
-		return (ft_free_tab(tmp), error_expand_redirect(cmd->cmd[i + 1], shell),
-			1);
+		return (ft_free_tab(tmp), expand_redirect(cmd->cmd[i + 1], shell), 1);
 	if (cmd->cmd[i][0] == '<')
 	{
 		if (open_with_error(shell, cmd, tmp[0], 1) == 1)

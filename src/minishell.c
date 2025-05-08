@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 16:08:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/02 05:38:04 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/08 02:07:59 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	minishell(t_minishell *shell)
 	while (true)
 	{
 		signals(SIGNAL_EXECUTE);
-		shell->line = readline("\033[1;33mMini station essence ⛽ $ \033[0m");
+		if (shell->exit == false)
+			shell->line = readline("\033[1;33mMini station essence "
+					"⛽ $ \033[0m");
 		signals(SIGNAL_IGN);
 		if (g_sig == 130)
 		{
@@ -35,5 +37,6 @@ void	minishell(t_minishell *shell)
 		if (parsing(shell, shell->line))
 			ft_execute_cmds(shell);
 		free(shell->line);
+		shell->line = NULL;
 	}
 }
