@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:52:01 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/07 04:43:29 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/09 02:03:05 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	open_with_error(t_minishell *shell, t_command *cmd, char *file, int flags)
 		if (shell->cmds->fd_in_put != 0 && shell->cmds->fd_in_put != -1)
 			close(shell->cmds->fd_in_put);
 		cmd->fd_in_put = acess_file(shell, file, flags);
-		if (cmd->fd_in_put == 0)
+		if (cmd->fd_in_put == 0 || cmd->fd_in_put == -1)
 			return (1);
 	}
 	else
@@ -42,7 +42,7 @@ int	open_with_error(t_minishell *shell, t_command *cmd, char *file, int flags)
 		if (shell->cmds->fd_out_put != 1 && shell->cmds->fd_out_put != -1)
 			close(shell->cmds->fd_out_put);
 		cmd->fd_out_put = acess_file(shell, file, flags);
-		if (cmd->fd_out_put == 1)
+		if (cmd->fd_out_put == 1 || cmd->fd_out_put == -1)
 			return (1);
 	}
 	return (0);

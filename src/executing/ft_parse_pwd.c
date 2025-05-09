@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse_env.c                                     :+:      :+:    :+:   */
+/*   ft_parse_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 15:51:37 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/09 04:39:07 by lsellier         ###   ########.fr       */
+/*   Created: 2025/05/08 08:22:20 by lsellier          #+#    #+#             */
+/*   Updated: 2025/05/09 04:42:12 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_parse_env(t_minishell *shell, t_command *cmd)
+int	ft_parse_pwd(t_minishell *shell, t_command *cmd)
 {
 	int	tmp[2];
 
 	redirection(shell, cmd);
 	tmp[0] = 0;
 	tmp[1] = 1;
-	shell->exit_status = 0;
 	if (ft_dup2(cmd))
 		return (1);
 	new_cmd_expand(&cmd->cmd, shell);
-	shell->exit_status = env(shell);
+	shell->exit_status = 0;
+	pwd();
 	dup2(tmp[0], 0);
 	dup2(tmp[1], 1);
-	if (shell->exit_status == 1)
-		ft_dprintf(2, "env: write error: No space left on device\n");
 	return (shell->exit_status);
 }

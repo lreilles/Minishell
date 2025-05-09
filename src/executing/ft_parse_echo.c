@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 04:41:55 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/07 04:49:12 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/09 04:40:55 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ int	ft_parse_echo(t_minishell *shell, t_command *cmd)
 		return (1);
 	new_cmd_expand(&cmd->cmd, shell);
 	flag = ft_skip_flag_n(cmd, &i);
-	ft_echo(cmd->cmd + i, flag);
+	shell->exit_status = ft_echo(cmd->cmd + i, flag);
+	if (shell->exit_status == 1)
+		ft_dprintf(2, "minishell: echo: write error: "
+			"No space left on device\n");
 	dup2(tmp[0], 0);
 	dup2(tmp[1], 1);
-	return (0);
+	return (shell->exit_status);
 }

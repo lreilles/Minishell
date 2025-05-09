@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/08 07:47:55 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/09 04:47:56 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void					ft_free_before_exit(t_minishell *shell, int fd_in,
 							int fd_out);
 char					*ft_strjoin_check(char *str1, char *str2);
 char					*ft_get_path(char *cmd, char **env);
-int						ft_verif_is_directory(char **cmd_exec, char **env);
+void					ft_verif_is_directory(char **cmd_exec, char **env);
 char					*my_getenv(char **env);
 // executing functions
 void					ft_execute_cmds(t_minishell *shell);
@@ -151,9 +151,17 @@ void					ft_chose_next_separator(t_command *cmd,
 							t_minishell *shell, int or_and);
 void					ft_chose_next_separator_pipe(t_command *cmd,
 							t_minishell *shell, int or_and);
+void					ft_execute_lastcmd_pipe(t_command *cmd,
+							t_minishell *shell);
 // built-in functions
 int						ft_echo(char **str, int flag);
-int						ft_parse_echo(t_minishell *shell, t_command *cmd);
+void					pwd(void);
 int						env(t_minishell *minishell);
+int						ft_parse_echo(t_minishell *shell, t_command *cmd);
 int						ft_parse_env(t_minishell *shell, t_command *cmd);
+int						ft_parse_cd(t_minishell *shell, t_command *cmd);
+int						ft_parse_exit(t_minishell *shell, t_command *cmd);
+int						ft_parse_pwd(t_minishell *shell, t_command *cmd);
+int						ft_parse_unset(t_minishell *shell, t_command *cmd);
+int						ft_parse_export(t_minishell *shell, t_command *cmd);
 #endif

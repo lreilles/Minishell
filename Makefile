@@ -38,6 +38,14 @@ SRC_FILES = main.c \
 			utils/ft_wait.c \
 			utils/chose_next_separator.c \
 			executing/execute_cmd.c \
+			executing/ft_parse_cd.c \
+			executing/ft_parse_export.c \
+			executing/ft_parse_exit.c \
+			executing/ft_parse_unset.c \
+			executing/ft_parse_pwd.c \
+			built-in/ft_pwd.c \
+			# built-in/ft_cd.c \
+			# built-in/ft_export.c \
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

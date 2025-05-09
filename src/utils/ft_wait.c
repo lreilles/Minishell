@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 07:31:28 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/08 07:49:32 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/09 04:27:25 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_wait_all_pid_without_last(t_minishell *shell)
 
 	if (!shell->pid_list)
 		return ;
+	close_fds(3);
 	while (shell->pid_list->next)
 	{
 		pid = shell->pid_list->pid;

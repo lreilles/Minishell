@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 07:30:05 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/08 07:49:54 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/09 04:30:19 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_chose_next_separator_pipe(t_command *cmd, t_minishell *shell,
 	else if (separator == 3)
 		ft_execute_and(cmd, shell, or_and, 1);
 	else
-		ft_execute_lastcmd(cmd, shell, or_and);
+		ft_execute_lastcmd_pipe(cmd, shell);
 }
 
 void	ft_chose_next_separator(t_command *cmd, t_minishell *shell, int or_and)

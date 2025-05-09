@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:06:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/08 07:20:26 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/09 04:02:47 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ void	ft_execute_cmd(t_command *cmd, t_minishell *shell)
 	int		exit_code;
 
 	exit_code = 0;
-	redirection(shell, cmd);
+	if (!redirection(shell, cmd))
+	{
+		ft_free_before_exit(shell, -1, -1);
+		exit(1);
+	}
 	if (ft_dup2(cmd))
 	{
 		ft_free_before_exit(shell, -1, -1);
@@ -77,6 +81,6 @@ void	ft_execute_cmd(t_command *cmd, t_minishell *shell)
 	new_cmd_expand(&cmd->cmd, shell);
 	cmd_exec = ft_tabdup(cmd->cmd);
 	env = ft_tabdup(shell->env);
-	ft_free_before_exit(shell, cmd->fd_in_put, cmd->fd_out_put);
+	ft_free_before_exit(shell, 0, 1);
 	ft_chose_execve(cmd_exec, env);
 }

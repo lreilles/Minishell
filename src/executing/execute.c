@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 04:52:34 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/08 07:48:53 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/09 04:23:33 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,20 @@
 t_pid	*ft_add_pid(t_pid *pid_list, pid_t pid)
 {
 	t_pid	*new;
+	t_pid	*last;
 
 	new = malloc(sizeof(t_pid));
 	if (!new)
 		return (NULL);
 	new->pid = pid;
-	new->next = pid_list;
-	return (new);
+	new->next = NULL;
+	if (!pid_list)
+		return (new);
+	last = pid_list;
+	while (last->next)
+		last = last->next;
+	last->next = new;
+	return (pid_list);
 }
 
 void	ft_execute_pipe(t_command *cmd, t_minishell *shell, int or_and)
@@ -33,20 +40,19 @@ void	ft_execute_pipe(t_command *cmd, t_minishell *shell, int or_and)
 	if (pipe(pipefd) == -1)
 		return ((void)ft_dprintf(2, "minishell: error pipe failed\n"));
 	cmd->fd_out_put = pipefd[1];
+	cmd->next->fd_in_put = pipefd[0];
 	cmd->pid = fork();
 	if (cmd->pid == -1)
 		return (close_fds(3), (void)ft_dprintf(2, "minishell:"
 				" error fork failed\n"));
 	if (cmd->pid == 0)
 	{
-		cmd->fd_out_put = pipefd[1];
 		if (ft_isbuiltin(cmd, shell))
 			ft_execute_builtin_pipe(shell, cmd);
 		else
 			ft_execute_cmd(cmd, shell);
 	}
 	shell->pid_list = ft_add_pid(shell->pid_list, cmd->pid);
-	cmd->next->fd_in_put = pipefd[0];
 	cmd = cmd->next;
 	ft_chose_next_separator_pipe(cmd, shell, 0);
 }

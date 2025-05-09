@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:09:05 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/08 07:51:41 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/09 04:47:11 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,38 +87,29 @@ void	ft_execute_builtin(t_minishell *shell, t_command *cmd)
 	builtin = ft_isbuiltin(cmd, shell);
 	if (builtin == 1)
 		shell->exit_status = parse_nothing(shell, cmd);
-	// else if (builtin == 2)
-	// 	exit_status = ft_cd(shell, cmd);
+	else if (builtin == 2)
+		shell->exit_status = ft_parse_cd(shell, cmd);
 	else if (builtin == 3)
 		shell->exit_status = ft_parse_echo(shell, cmd);
 	else if (builtin == 4)
 		shell->exit_status = ft_parse_env(shell, cmd);
+	else if (builtin == 5)
+		shell->exit_status = ft_parse_exit(shell, cmd);
+	else if (builtin == 6)
+		shell->exit_status = ft_parse_export(shell, cmd);
+	else if (builtin == 7)
+		shell->exit_status = ft_parse_pwd(shell, cmd);
+	else if (builtin == 8)
+		shell->exit_status = ft_parse_unset(shell, cmd);
 	return ;
 }
 
 void	ft_execute_builtin_pipe(t_minishell *shell, t_command *cmd)
 {
-	int	builtin;
 	int	exit_status;
 
-	builtin = ft_isbuiltin(cmd, shell);
-	exit_status = 0;
-	if (builtin == 1)
-		exit_status = parse_nothing(shell, cmd);
-	// else if (builtin == 2)
-	// 	exit_status = ft_cd(shell, cmd);
-	else if (builtin == 3)
-		exit_status = ft_parse_echo(shell, cmd);
-	else if (builtin == 4)
-		exit_status = ft_parse_env(shell, cmd);
-	// else if (builtin == 5)
-	// 	exit_status = ft_exit(shell, cmd);
-	// else if (builtin == 6)
-	// 	exit_status = ft_export(shell, cmd);
-	// else if (builtin == 7)
-	// 	exit_status = ft_pwd(shell, cmd);
-	// else if (builtin == 8)
-	// 	exit_status = ft_unset(shell, cmd);
+	ft_execute_builtin(shell, cmd);
+	exit_status = shell->exit_status;
 	ft_free_before_exit(shell, -1, -1);
 	close_fds(0);
 	exit(exit_status);

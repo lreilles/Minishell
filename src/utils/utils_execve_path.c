@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 07:19:37 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/08 07:20:30 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/09 04:03:43 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*my_getenv(char **env)
 	return (NULL);
 }
 
-int	ft_verif_is_directory(char **cmd_exec, char **env)
+void	ft_verif_is_directory(char **cmd_exec, char **env)
 {
 	struct stat	stat_struct;
 
@@ -41,7 +41,6 @@ int	ft_verif_is_directory(char **cmd_exec, char **env)
 			exit(126);
 		}
 	}
-	return (0);
 }
 
 char	*ft_get_path(char *cmd, char **env)
@@ -50,19 +49,17 @@ char	*ft_get_path(char *cmd, char **env)
 	char	*exec;
 	char	**allpath;
 	char	*path_part;
-	char	**s_cmd;
 
 	i = -1;
-	s_cmd = ft_split(cmd, ' ');
 	allpath = ft_split(my_getenv(env), ':');
 	while (allpath[++i])
 	{
 		path_part = ft_strjoin(allpath[i], "/");
-		exec = ft_strjoin(path_part, s_cmd[0]);
+		exec = ft_strjoin(path_part, cmd);
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
-			return (ft_free_tab(allpath), ft_free_tab(s_cmd), exec);
+			return (ft_free_tab(allpath), exec);
 		free(exec);
 	}
-	return (ft_free_tab(allpath), ft_free_tab(s_cmd), ft_strdup(cmd));
+	return (ft_free_tab(allpath), ft_strdup(cmd));
 }

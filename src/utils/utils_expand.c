@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 03:45:32 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/07 07:57:14 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/09 06:42:34 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,50 @@ char	**get_env_value2(t_minishell *shell, char **env, char *str, int *i)
 	char	*tmp;
 	char	**tmp2;
 
+	if (*str == '\0' || *str == '\'' || *str == '\"')
+	{
+		(*i)++;
+		if (*str == '\0')
+			return (ft_split("$", ' '));
+		return (ft_split("", ' '));
+	}
 	tmp = get_env_value(shell, env, str, i);
 	tmp2 = ft_split(tmp, ' ');
+	(*i)++;
 	free(tmp);
 	return (tmp2);
 }
 
+void	add_len_of_new_cmd(t_minishell *shell, char *str, int *i, int *len)
+{
+	int		len_tmp;
+	char	**tmp;
+
+	tmp = get_env_value2(shell, shell->env, str + *i + 1, i);
+	len_tmp = 0;
+	if (ft_tablen(tmp) > 1)
+		while (tmp[(len_tmp++) + 1])
+			(*len)++;
+	ft_free_tab(tmp);
+}
+
 int	have_len_tab_expand(char *str, t_minishell *shell)
 {
-	int		len;
-	int		i;
-	char	**tmp;
-	int		k;
+	int	len;
+	int	i;
 
 	i = 0;
 	len = 1;
+	if (!str)
+		return (0);
+	if (ft_strcmp("~", str) == 0)
+		return (1);
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '"')
 			skip_quotes(str, &i, str[i]);
 		else if (str[i] == '$')
-		{
-			tmp = get_env_value2(shell, shell->env, str + i + 1, &i);
-			k = 0;
-			if (ft_tablen(tmp) > 1)
-				while (tmp[(k++) + 1])
-					len++;
-			ft_free_tab(tmp);
-		}
+			add_len_of_new_cmd(shell, str, &i, &len);
 		else
 			i++;
 	}
