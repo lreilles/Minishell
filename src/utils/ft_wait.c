@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 07:31:28 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/11 04:51:28 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/11 04:57:50 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	ft_wait_all_pid(t_minishell *shell)
 int	ft_waitpid(t_minishell *shell, int or_and)
 {
 	int		status;
-	t_pid	*tmp;
 
 	if (or_and)
 	{
