@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 22:25:44 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/07 03:42:17 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/10 03:11:23 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	parsing(t_minishell *shell, char *line)
 		return (ft_free_tab(args), 0);
 	shell->args = args;
 	shell->cmds = creat_cmds(shell);
-	// shell->cmds = redirection(shell);
+	shell->cmds = ft_heredoc(shell);
 	if (shell->cmds == NULL)
 		return (ft_free_tab(args), 0);
 	return (1);

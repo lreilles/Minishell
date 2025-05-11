@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 02:03:12 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/09 06:35:28 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/11 03:32:07 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*expand_in_quote(char *expanded_str, char *str, int *i,
 			{
 				tmp = expanded_str;
 				value = get_env_value(shell, shell->env, str + *i + 1, i);
-				expanded_str = ft_strjoin(tmp, value);
+				expanded_str = ft_strjoin_check(tmp, value);
 				free(tmp);
 				free(value);
 			}

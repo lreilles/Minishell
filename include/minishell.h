@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/09 04:47:56 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/11 04:21:51 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../dprintf/ft_dprintf.h"
 # include "../ft_printf/ft_printf.h"
 # include "../libft/libft.h"
+# include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -27,6 +28,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/stat.h>
+# include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
 # ifndef SIGNALS
@@ -46,6 +48,7 @@ typedef struct s_minishell
 	int					exit;
 	int					exit_status;
 	int					nb_args;
+	int					nbr_file;
 	char				**args;
 	struct s_pid		*pid_list;
 	struct s_command	*cmds;
@@ -69,6 +72,7 @@ typedef struct s_command
 
 void					minishell(t_minishell *shell);
 void					signals(int sig);
+void					signals_wait(void);
 char					**ft_tabdup(char **tab);
 void					ft_free_tab(char **tab);
 void					init_struct(t_minishell **shell, char **env);
@@ -88,6 +92,10 @@ int						redirection(t_minishell *shell, t_command *cmd);
 void					delete_redirection(t_command *cmd, int *i);
 char					*expand_in_quote(char *expanded_str, char *str, int *i,
 							t_minishell *shell);
+int						open_redirection_heredoc(t_minishell *shell,
+							t_command *cmds, int i);
+t_command				*ft_heredoc(t_minishell *shell);
+char					*ft_expand_heredoc(t_minishell *shell, char *str);
 // utils functions
 int						ft_strcmp(const char *s1, const char *s2);
 int						ft_isspace(int c);
@@ -124,6 +132,8 @@ char					*ft_strjoin_check(char *str1, char *str2);
 char					*ft_get_path(char *cmd, char **env);
 void					ft_verif_is_directory(char **cmd_exec, char **env);
 char					*my_getenv(char **env);
+void					unlink_all_tmp(int nbr);
+char					*have_tmp_file(int i);
 // executing functions
 void					ft_execute_cmds(t_minishell *shell);
 void					ft_execute_lastcmd(t_command *cmd, t_minishell *shell,

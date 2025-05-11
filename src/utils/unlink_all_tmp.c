@@ -1,25 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   unlink_all_tmp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/30 21:08:35 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/11 04:36:01 by lsellier         ###   ########.fr       */
+/*   Created: 2025/05/11 04:10:18 by lsellier          #+#    #+#             */
+/*   Updated: 2025/05/11 04:36:37 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	main(int ac, char **av)
+char	*have_tmp_file(int i)
 {
-	t_minishell	*shell;
+	char	*tmp;
+	char	*str;
 
-	signals(SIGNAL_IGN);
-	rl_outstream = stderr;
-	init_struct(&shell, av + ac + 1);
-	minishell(shell);
-	close_fds(0);
-	return (free_struct(shell));
+	tmp = ft_itoa(i);
+	str = ft_strjoin("/tmp/tmp_", tmp);
+	free(tmp);
+	return (str);
+}
+
+void	unlink_all_tmp(int nbr)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (i < nbr)
+	{
+		tmp = have_tmp_file(i);
+		unlink(tmp);
+		free(tmp);
+		i++;
+	}
 }

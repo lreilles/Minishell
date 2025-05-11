@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   redirection_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/30 21:08:35 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/11 04:36:01 by lsellier         ###   ########.fr       */
+/*   Created: 2025/05/11 03:59:54 by lsellier          #+#    #+#             */
+/*   Updated: 2025/05/11 04:07:28 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	main(int ac, char **av)
+int	open_redirection_heredoc(t_minishell *shell, t_command *cmds, int i)
 {
-	t_minishell	*shell;
-
-	signals(SIGNAL_IGN);
-	rl_outstream = stderr;
-	init_struct(&shell, av + ac + 1);
-	minishell(shell);
-	close_fds(0);
-	return (free_struct(shell));
+	cmds->fd_in_put = open(cmds->cmd[i + 1], O_RDONLY);
+	if (cmds->fd_in_put == -1)
+	{
+		ft_dprintf(2, "minishell: %s: No such file or directory\n",
+			cmds->cmd[i + 1]);
+		shell->exit_status = 1;
+		return (1);
+	}
+	return (0);
 }

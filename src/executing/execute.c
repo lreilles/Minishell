@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 04:52:34 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/09 04:23:33 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/11 04:09:32 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ void	ft_execute_cmds(t_minishell *shell)
 	ft_chose_next_separator(shell->cmds, shell, 0);
 	ft_free_t_command(shell);
 	ft_free_tab(shell->args);
+	unlink_all_tmp(shell->nbr_file);
 	close_fds(3);
 }

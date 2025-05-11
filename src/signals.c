@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:43:51 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/14 08:54:48 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/10 03:54:28 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,25 @@ static void	int_handler(int sig)
 	g_sig = 130;
 }
 
-static void	quit_handler(int sig)
+static void	here_doc_sigint(int sig)
 {
 	(void)sig;
+	ft_dprintf(2, "\n");
 	g_sig = 130;
-	exit(130);
+	close_fds(0);
 }
 
 void	signals(int sig)
 {
 	if (sig == SIGNAL_EXECUTE)
 	{
-		sigaction(SIGINT, &(struct sigaction){.sa_handler = int_handler}, NULL);
+		signal(SIGINT, int_handler);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGPIPE, SIG_IGN);
 	}
 	else if (sig == SIGNAL_HERE_DOC)
 	{
-		sigaction(SIGINT, &(struct sigaction){.sa_handler = quit_handler},
-			NULL);
+		signal(SIGINT, here_doc_sigint);
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGPIPE, SIG_IGN);
 	}
@@ -58,4 +58,21 @@ void	signals(int sig)
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGPIPE, SIG_IGN);
 	}
+}
+
+static void	int_handler_wait(int sig)
+{
+	if (sig == SIGQUIT)
+		ft_dprintf(2, "Quit (core dumped)");
+	ft_dprintf(2, "\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	g_sig = 130;
+}
+
+void	signals_wait(void)
+{
+	signal(SIGINT, int_handler_wait);
+	signal(SIGQUIT, int_handler_wait);
+	signal(SIGPIPE, SIG_IGN);
 }

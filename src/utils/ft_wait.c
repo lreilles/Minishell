@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 07:31:28 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/09 04:27:25 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/11 04:51:28 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_wait_all_pid_without_last(t_minishell *shell)
 
 	if (!shell->pid_list)
 		return ;
+	signals_wait();
 	close_fds(3);
 	while (shell->pid_list->next)
 	{
@@ -29,6 +30,19 @@ void	ft_wait_all_pid_without_last(t_minishell *shell)
 		shell->pid_list = shell->pid_list->next;
 		free(tmp);
 	}
+}
+
+int	ft_wait_all_pid(t_minishell *shell)
+{
+	int		status;
+	t_pid	*tmp;
+
+	ft_wait_all_pid_without_last(shell);
+	tmp = shell->pid_list;
+	waitpid(shell->pid_list->pid, &status, 0);
+	free(tmp);
+	shell->pid_list = NULL;
+	return (status);
 }
 
 int	ft_waitpid(t_minishell *shell, int or_and)
@@ -42,11 +56,7 @@ int	ft_waitpid(t_minishell *shell, int or_and)
 		{
 			if (!shell->pid_list)
 				return (!shell->exit_status);
-			ft_wait_all_pid_without_last(shell);
-			tmp = shell->pid_list;
-			waitpid(shell->pid_list->pid, &status, 0);
-			free(tmp);
-			shell->pid_list = NULL;
+			status = ft_wait_all_pid(shell);
 			if (!WIFEXITED(status))
 				return (shell->exit_status = WEXITSTATUS(status), 0);
 		}
@@ -54,11 +64,7 @@ int	ft_waitpid(t_minishell *shell, int or_and)
 		{
 			if (!shell->pid_list)
 				return (shell->exit_status);
-			ft_wait_all_pid_without_last(shell);
-			tmp = shell->pid_list;
-			waitpid(shell->pid_list->pid, &status, 0);
-			free(tmp);
-			shell->pid_list = NULL;
+			status = ft_wait_all_pid(shell);
 			if (WIFEXITED(status))
 				return (shell->exit_status = WEXITSTATUS(status), 0);
 		}

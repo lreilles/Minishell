@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:52:01 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/09 02:03:05 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/11 04:06:05 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ int	open_with_error(t_minishell *shell, t_command *cmd, char *file, int flags)
 {
 	if (flags <= 2)
 	{
-		if (shell->cmds->fd_in_put != 0 && shell->cmds->fd_in_put != -1)
-			close(shell->cmds->fd_in_put);
+		if (cmd->fd_in_put != 0 && cmd->fd_in_put != -1)
+			close(cmd->fd_in_put);
 		cmd->fd_in_put = acess_file(shell, file, flags);
 		if (cmd->fd_in_put == 0 || cmd->fd_in_put == -1)
 			return (1);
 	}
 	else
 	{
-		if (shell->cmds->fd_out_put != 1 && shell->cmds->fd_out_put != -1)
-			close(shell->cmds->fd_out_put);
+		if (cmd->fd_out_put != 1 && cmd->fd_out_put != -1)
+			close(cmd->fd_out_put);
 		cmd->fd_out_put = acess_file(shell, file, flags);
 		if (cmd->fd_out_put == 1 || cmd->fd_out_put == -1)
 			return (1);
@@ -112,6 +112,8 @@ int	redirection(t_minishell *shell, t_command *cmds)
 			error = open_redirection(shell, cmds, i);
 		else if (ft_strcmp(cmds->cmd[i], ">>") == 0)
 			error = open_redirection(shell, cmds, i);
+		else if (ft_strcmp(cmds->cmd[i], "<<") == 0)
+			error = open_redirection_heredoc(shell, cmds, i);
 		if (error == 1)
 			break ;
 	}

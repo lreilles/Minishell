@@ -1,37 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_t_command.c                                :+:      :+:    :+:   */
+/*   expand_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 23:46:52 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/10 01:02:23 by lsellier         ###   ########.fr       */
+/*   Created: 2025/05/11 01:42:59 by lsellier          #+#    #+#             */
+/*   Updated: 2025/05/11 03:32:30 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_free_t_command(t_minishell *shell)
+char	*ft_expand_heredoc(t_minishell *shell, char *str)
 {
-	t_command	*tmp;
-	t_pid		*tmp_pid;
+	char	*expanded_str;
+	int		i;
+	char	*tmp;
+	char	*value;
 
-	while (shell->cmds)
+	i = 0;
+	expanded_str = NULL;
+	if (!str)
+		return (NULL);
+	while (str[i])
 	{
-		ft_free_tab(shell->cmds->cmd);
-		tmp = shell->cmds->next;
-		free(shell->cmds);
-		shell->cmds = tmp;
-	}
-	if (shell->pid_list)
-	{
-		while (shell->pid_list)
+		if (str[i] == '$')
 		{
-			tmp_pid = shell->pid_list;
-			shell->pid_list = shell->pid_list->next;
-			free(tmp_pid);
+			tmp = expanded_str;
+			value = get_env_value(shell, shell->env, str + i++ + 1, &i);
+			expanded_str = ft_strjoin_check(tmp, value);
+			free(tmp);
+			free(value);
 		}
+		else
+			expanded_str = ft_strjoin_char(expanded_str, str[i++]);
 	}
-	shell->pid_list = NULL;
+	return (expanded_str);
 }

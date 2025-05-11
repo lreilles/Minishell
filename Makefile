@@ -44,8 +44,12 @@ SRC_FILES = main.c \
 			executing/ft_parse_unset.c \
 			executing/ft_parse_pwd.c \
 			built-in/ft_pwd.c \
+			parsing/ft_heredoc.c \
+			parsing/expand_heredoc.c \
+			parsing/redirection_heredoc.c \
+			utils/unlink_all_tmp.c \
 			# built-in/ft_cd.c \
-			# built-in/ft_export.c \
+			built-in/ft_export.c
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
