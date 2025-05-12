@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 00:49:38 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/11 09:46:09 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:23:30 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	loop_heredoc(t_minishell *shell, char *eof, int fd, int have_quotes)
 	int		expand;
 
 	line_error = 0;
-	expand = have_quotes;
+	expand = !have_quotes;
 	rl_clear_history();
 	while (++line_error)
 	{
@@ -75,6 +75,7 @@ void	open_and_loop_heredoc(t_minishell *shell, t_command **cmd,
 	eof = without_quotes(tmp);
 	loop_heredoc(shell, eof, fd, have_quote(tmp));
 	free(tmp);
+	free(eof);
 	ft_free_before_exit(shell, 0, fd);
 	close_fds(0);
 	exit(g_sig);

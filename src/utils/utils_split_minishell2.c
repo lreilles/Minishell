@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 05:27:54 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/12 18:33:59 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:40:07 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ int	ft_is_quote(char c)
 
 void	skip_quotes(char *line, int *i, char quote)
 {
-	while (line[++(*i)] && line[*i] != quote)
-		;
+	if (line[(*i) + 1])
+		while (line[++(*i)] && line[*i] != quote)
+			if (line[*i] == '\\')
+				(*i)++;
 	(*i)++;
 }
 

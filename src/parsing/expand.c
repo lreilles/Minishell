@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 02:03:12 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/12 18:27:04 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:28:30 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ char	**expand_variable(char *str, t_minishell *shell)
 			add_to_expanded_tab(shell, str, ((int *[]){&i, &j}), expanded_tab);
 		else if (str[i++] != '\\')
 			expanded_tab[j] = ft_strjoin_char(expanded_tab[j], str[i - 1]);
-		else
+		else if (str[i])
 			expanded_tab[j] = ft_strjoin_char(expanded_tab[j], str[(i)++]);
 	}
 	return (expanded_tab);

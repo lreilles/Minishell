@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/11 04:21:51 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:26:44 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,14 @@ int						ft_strcmp(const char *s1, const char *s2);
 int						ft_isspace(int c);
 int						est_dans_charset(char c);
 int						ft_is_separator(char c);
+int						ft_isspecial_char(char c, int flag);
 char					*get_env_value(t_minishell *shell, char **env,
 							char *str, int *i);
 int						ft_is_quote(char c);
 int						ft_tablen(char **tab);
 void					skip_quotes(char *line, int *i, char quote);
 int						count_tab_len(char *line);
-int						have_len_tab_expand(char *str, t_minishell *shell);
+int						have_lentabexpand(char *str, t_minishell *shell);
 void					add_to_expanded_tab(t_minishell *shell, char *str,
 							int *n[2], char **expanded_tab);
 char					**get_env_value2(t_minishell *shell, char **env,

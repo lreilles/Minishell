@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 22:25:44 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/11 09:52:43 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/12 19:33:41 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,22 @@ int	parsing(t_minishell *shell, char *line)
 
 int	is_quote_closed(const char *line)
 {
+	int	i;
 	int	inside_double_quote;
 	int	inside_single_quote;
 
 	inside_double_quote = 0;
 	inside_single_quote = 0;
-	while (*line)
+	i = 0;
+	while (line[i])
 	{
-		if (*line == '\\')
-			line++;
-		else if (*line == '"' && !inside_single_quote)
+		if (line[i] == '\\' && line[i + 1])
+			i++;
+		else if (line[i] == '"' && !inside_single_quote)
 			inside_double_quote = !inside_double_quote;
-		else if (*line == '\'' && !inside_double_quote)
+		else if (line[i] == '\'' && !inside_double_quote)
 			inside_single_quote = !inside_single_quote;
-		line++;
+		i++;
 	}
 	return (inside_double_quote == 0 && inside_single_quote == 0);
 }
