@@ -6,11 +6,28 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 03:45:32 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/09 06:42:34 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:26:00 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	ft_isspecial_char(char c, int flag)
+{
+	if (c == '$' || c == '\\'
+		|| c == ' ' || c == '~' || c == '`' || c == ';'
+		|| c == '|' || c == '&' || c == '(' || c == ')'
+		|| c == '{' || c == '}' || c == '[' || c == ']'
+		|| c == '<' || c == '>' || c == ':' || c == '='
+		|| c == '!' || c == '^' || c == '#' || c == '%'
+		|| c == '@' || c == '+' || c == '-' || c == '/'
+		|| c == '*' || c == ',' || c == '.')
+		return (1);
+	if (flag == 1)
+		if (c == '\'' || c == '\"')
+			return (1);
+	return (0);
+}
 
 char	**get_env_value2(t_minishell *shell, char **env, char *str, int *i)
 {
@@ -44,7 +61,7 @@ void	add_len_of_new_cmd(t_minishell *shell, char *str, int *i, int *len)
 	ft_free_tab(tmp);
 }
 
-int	have_len_tab_expand(char *str, t_minishell *shell)
+int	have_lentabexpand(char *str, t_minishell *shell)
 {
 	int	len;
 	int	i;

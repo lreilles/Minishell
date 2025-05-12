@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 00:49:38 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/11 04:44:18 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/11 09:46:09 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,27 @@ int	have_quote(char *str)
 	return (0);
 }
 
-void	loop_heredoc(t_minishell *shell, char *eof, int fd)
+void	loop_heredoc(t_minishell *shell, char *eof, int fd, int have_quotes)
 {
 	char	*line;
 	int		line_error;
 	int		expand;
 
 	line_error = 0;
-	expand = !have_quote(eof);
+	expand = have_quotes;
 	rl_clear_history();
 	while (++line_error)
 	{
 		signals(SIGNAL_HERE_DOC);
 		line = readline("> ");
 		signals(SIGNAL_IGN);
-		add_history(line);
-		if (line && expand && line[0])
-			line = ft_expand_heredoc(shell, line);
 		if (line == NULL)
 			break ;
 		if (ft_strcmp(line, eof) == 0)
 			return ((void)free(line));
+		add_history(line);
+		if (line && expand && line[0])
+			line = ft_expand_heredoc(shell, line);
 		ft_dprintf(fd, "%s\n", line);
 		free(line);
 	}
@@ -59,6 +59,7 @@ void	open_and_loop_heredoc(t_minishell *shell, t_command **cmd,
 {
 	int		fd;
 	char	*tmp;
+	char	*eof;
 
 	fd = open(tmp_file, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	tmp = ft_strdup((*cmd)->cmd[(*i) + 1]);
@@ -71,9 +72,10 @@ void	open_and_loop_heredoc(t_minishell *shell, t_command **cmd,
 		free(tmp);
 		exit(1);
 	}
-	loop_heredoc(shell, tmp, fd);
-	ft_free_before_exit(shell, 0, fd);
+	eof = without_quotes(tmp);
+	loop_heredoc(shell, eof, fd, have_quote(tmp));
 	free(tmp);
+	ft_free_before_exit(shell, 0, fd);
 	close_fds(0);
 	exit(g_sig);
 }

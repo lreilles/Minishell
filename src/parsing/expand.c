@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 02:03:12 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/11 03:32:07 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/12 18:27:04 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_env_value(t_minishell *shell, char **env, char *str, int *i)
 	k = 0;
 	if (str[0] == '?')
 		return ((*i)++, ft_itoa(shell->exit_status));
-	while (str[k] && str[k] != '$' && str[k] != '\'' && str[k] != '\"')
+	while (str[k] && !ft_isspecial_char(str[k], 1))
 	{
 		k++;
 		(*i)++;
@@ -74,27 +74,26 @@ char	*expand_in_quote(char *expanded_str, char *str, int *i,
 	char	*value;
 	char	*tmp;
 
-	if (str[*i] == '\"')
+	(*i)++;
+	if (str[(*i) - 1] == '\"')
 	{
-		(*i)++;
-		while (str[*i] && str[*i] != '"')
+		while (str[(*i)] && str[(*i)++] != '"')
 		{
-			if (str[*i] == '$')
+			if (str[(*i) - 1] == '$' && !ft_isspecial_char(str[(*i)], 1))
 			{
 				tmp = expanded_str;
-				value = get_env_value(shell, shell->env, str + *i + 1, i);
+				value = get_env_value(shell, shell->env, str + (*i), i);
 				expanded_str = ft_strjoin_check(tmp, value);
 				free(tmp);
 				free(value);
 			}
 			else
-				expanded_str = ft_strjoin_char(expanded_str, str[*i]);
-			(*i)++;
+				expanded_str = ft_strjoin_char(expanded_str, str[(*i) - 1]);
 		}
 	}
 	else
-		while (str[++(*i)] != '\'' && str[(*i)])
-			expanded_str = ft_strjoin_char(expanded_str, str[(*i)]);
+		while (str[(*i)++] != '\'' && str[(*i)])
+			expanded_str = ft_strjoin_char(expanded_str, str[(*i) - 1]);
 	return (expanded_str);
 }
 
@@ -126,11 +125,10 @@ char	**expand_variable(char *str, t_minishell *shell)
 
 	i = 0;
 	j = 0;
-	if (!have_len_tab_expand(str, shell))
+	if (!have_lentabexpand(str, shell))
 		return (NULL);
-	expanded_tab = malloc(sizeof(char *) * (have_len_tab_expand(str, shell)
-				+ 1));
-	expanded_tab[have_len_tab_expand(str, shell)] = NULL;
+	expanded_tab = malloc(sizeof(char *) * (have_lentabexpand(str, shell) + 1));
+	expanded_tab[have_lentabexpand(str, shell)] = NULL;
 	if (ft_strcmp(str, "~") == 0)
 		return (expanded_tab[0] = get_home(shell), expanded_tab);
 	expanded_tab[j] = ft_strdup("");
@@ -138,10 +136,12 @@ char	**expand_variable(char *str, t_minishell *shell)
 	{
 		if (str[i] == '\'' || str[i] == '"')
 			expanded_tab[j] = expand_in_quote(expanded_tab[j], str, &i, shell);
-		else if (str[i] == '$')
+		else if (str[i] == '$' && (!ft_isspecial_char(str[i + 1], 0)))
 			add_to_expanded_tab(shell, str, ((int *[]){&i, &j}), expanded_tab);
+		else if (str[i++] != '\\')
+			expanded_tab[j] = ft_strjoin_char(expanded_tab[j], str[i - 1]);
 		else
-			expanded_tab[j] = ft_strjoin_char(expanded_tab[j], str[i++]);
+			expanded_tab[j] = ft_strjoin_char(expanded_tab[j], str[(i)++]);
 	}
 	return (expanded_tab);
 }

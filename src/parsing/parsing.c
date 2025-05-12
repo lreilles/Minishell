@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 22:25:44 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/10 03:11:23 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/11 09:52:43 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ int	is_quote_closed(const char *line)
 	inside_single_quote = 0;
 	while (*line)
 	{
-		if (*line == '"' && !inside_single_quote)
+		if (*line == '\\')
+			line++;
+		else if (*line == '"' && !inside_single_quote)
 			inside_double_quote = !inside_double_quote;
 		else if (*line == '\'' && !inside_double_quote)
 			inside_single_quote = !inside_single_quote;
