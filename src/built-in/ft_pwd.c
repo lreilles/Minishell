@@ -6,7 +6,7 @@
 /*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:31:25 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/05/13 01:10:50 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/05/13 02:08:20 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ int	pwd(void)
 	if (verif < 0)
 		return (1);
 	free(path);
+	return (0);
 }
