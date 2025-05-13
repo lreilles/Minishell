@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:00:44 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/02 05:47:27 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/14 00:10:08 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**ft_tabdup(char **tab)
 	int		i;
 
 	i = 0;
-	if (!tab || !tab[0])
+	if (!tab)
 		return (NULL);
 	while (tab[i])
 		i++;
