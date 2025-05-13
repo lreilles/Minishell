@@ -6,14 +6,13 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 19:42:32 by lsellier          #+#    #+#             */
-/*   Updated: 2025/04/09 05:12:41 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/13 06:18:59 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 static int	est_dans_charset(char const c, char *charset)
 {
@@ -56,9 +55,9 @@ static void	*free_tableau(char **tab, int k)
 
 static char	**allouer_add_tab(char const *str, char *c, int nb_mot, char **tab)
 {
-	int		i;
-	int		k;
-	int		debut;
+	int	i;
+	int	k;
+	int	debut;
 
 	i = 0;
 	k = 0;
@@ -94,9 +93,9 @@ char	**ft_split(char const *str, char charset)
 	nb_mots = 0;
 	while (str[i])
 	{
-		if (!est_dans_charset(str[i], &charset))
+		if (!est_dans_charset(str[i], tmp))
 		{
-			if (i == 0 || est_dans_charset(str[i - 1], &charset))
+			if (i == 0 || est_dans_charset(str[i - 1], tmp))
 				nb_mots++;
 		}
 		i++;
