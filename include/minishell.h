@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/12 18:26:44 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/13 02:26:33 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void					add_to_expanded_tab(t_minishell *shell, char *str,
 							int *n[2], char **expanded_tab);
 char					**get_env_value2(t_minishell *shell, char **env,
 							char *str, int *i);
+char					**edit_env_value(t_minishell *shell, char *value,
+							char *new_one);
 void					increment_if_necessary(int *len, int *add_len);
 void					separator_count(char *line, int *i, int *len,
 							int *add_len);
@@ -166,7 +168,8 @@ void					ft_execute_lastcmd_pipe(t_command *cmd,
 							t_minishell *shell);
 // built-in functions
 int						ft_echo(char **str, int flag);
-void					pwd(void);
+int						pwd(void);
+int						ft_cd(t_minishell *minishell, char **cmd);
 int						env(t_minishell *minishell);
 int						ft_parse_echo(t_minishell *shell, t_command *cmd);
 int						ft_parse_env(t_minishell *shell, t_command *cmd);

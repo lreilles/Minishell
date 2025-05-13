@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 07:58:56 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/09 05:50:13 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/13 02:32:23 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	ft_parse_cd(t_minishell *shell, t_command *cmd)
 		if (ft_tablen(cmd->cmd) == 1)
 			return (ft_dprintf(2, "minishell cd: HOME not set\n"), 1);
 	}
-	// ft_cd(shell, cmd->cmd + 1);
+	shell->exit_status = ft_cd(shell, cmd->cmd + 1);
 	dup2(tmp[0], 0);
 	dup2(tmp[1], 1);
-	return (0);
+	return (shell->exit_status);
 }
