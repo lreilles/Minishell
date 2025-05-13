@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:06:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/10 00:35:43 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/05/14 01:48:22 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_free_before_exit(t_minishell *shell, int fd_in, int fd_out)
 void	ft_execve_without_path(char **cmd_exec, char **env)
 {
 	signals(SIGNAL_DEFAULT);
-	execve(cmd_exec[0], cmd_exec, NULL);
+	execve(cmd_exec[0], cmd_exec, env);
 	signals(SIGNAL_IGN);
 	ft_dprintf(2, "minishell: %s: No such file or directory\n", cmd_exec[0]);
 	ft_free_tab(env);
