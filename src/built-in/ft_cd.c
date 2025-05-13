@@ -6,7 +6,7 @@
 /*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:32:35 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/05/13 02:43:53 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/05/13 03:30:49 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ int	ft_cd(t_minishell *minishell, char **cmd)
 		return (ft_dprintf(2, "minishell: cd: too many arguments\n"), 1);
 	verif = chdir(cmd[0]);
 	if (verif < 0)
-		return (1);
+		return (ft_dprintf(2, "cd: no such file or directory: cd\n"),1);
 	path = get_env_value(minishell, minishell->env, "PWD", &tmp);
 	if (path)
+	{
+		edit_env_value(minishell, "OLDPWD", path);
 		edit_env_value(minishell, "PWD", cmd[0]);
+	}
 	free(path);
 	return (0);
 }
