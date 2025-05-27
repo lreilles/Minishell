@@ -12,6 +12,25 @@
 
 #include "../../include/minishell.h"
 
+// edit_env_value(t_minishell *shell, char *value, char *new_one)
+
+void	ft_export(t_minishell *minishell, char **export)
+{
+	char	*shlvl;
+	int		temp;
+
+	temp = 0;
+	shlvl = get_env_value(*shell, (*shell)->env, "SHLVL", &temp);
+	if (shlvl)
+	{
+		temp = ft_atoi(shlvl) + 1;
+		free(shlvl);
+		shlvl = ft_itoa(temp);
+		edit_env_value(*shell, "SHLVL", shlvl);
+	}
+	free(shlvl);
+}
+
 void	ft_export_with_value(t_minishell *minishell, char **export)
 {
 	int		i;
