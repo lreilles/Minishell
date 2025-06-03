@@ -50,10 +50,8 @@ int	open_with_error(t_minishell *shell, t_command *cmd, char *file, int flags)
 
 void	expand_redirect(char *cmd, t_minishell *shell)
 {
-	int		i;
 	char	*str;
 
-	i = 0;
 	str = without_quotes(cmd);
 	if (ft_is_quote(cmd[0]) || strcmp(cmd, "$") == 0)
 	{
@@ -80,17 +78,17 @@ int	open_redirection(t_minishell *shell, t_command *cmd, int i)
 				"%s: ambiguous redirect\n", cmd->cmd[i + 1]), 1);
 	if (tmp[0][0] == '\0')
 		return (ft_free_tab(tmp), expand_redirect(cmd->cmd[i + 1], shell), 1);
-	if (cmd->cmd[i][0] == '<')
+	if (ft_strcmp(cmd->cmd[i][0] ,"<"))
 	{
 		if (open_with_error(shell, cmd, tmp[0], 1) == 1)
 			return (ft_free_tab(tmp), 1);
 	}
-	else if (cmd->cmd[i][0] == '>')
+	else if (ft_strcmp(cmd->cmd[i][0] , ">") == 0)
 	{
 		if (open_with_error(shell, cmd, tmp[0], 3) == 1)
 			return (ft_free_tab(tmp), 1);
 	}
-	else if (ft_strcmp(cmd->cmd[i], ">>"))
+	else if (ft_strcmp(cmd->cmd[i], ">>") == 0)
 		if (open_with_error(shell, cmd, tmp[0], 4) == 1)
 			return (ft_free_tab(tmp), 1);
 	ft_free_tab(tmp);

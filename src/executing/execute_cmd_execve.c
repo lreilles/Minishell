@@ -65,9 +65,7 @@ void	ft_execute_cmd(t_command *cmd, t_minishell *shell)
 {
 	char	**env;
 	char	**cmd_exec;
-	int		exit_code;
 
-	exit_code = 0;
 	if (!redirection(shell, cmd))
 	{
 		ft_free_before_exit(shell, -1, -1);
