@@ -3,33 +3,127 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ameduboi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 00:31:10 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/04/11 02:03:27 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/06/05 21:41:25 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_exit(char *tab)
+int	verif_overflow(long long int nb, long long int verif, int sign)
+{
+	if (sign < 0)
+		if (nb == LLONG_MIN)
+			return (0);
+	if (nb < verif)
+		return (1);
+	return (0);
+}
+
+int	can_atoll(const char *str)
+{
+	long long int	nb;
+	int				sign;
+	long long int	verif;
+
+	sign = 1;
+	nb = 0;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			sign *= -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		verif = nb;
+		nb = nb * 10 + (*str - '0');
+		dprintf(2, "test , nb = %lld\n", nb);
+		if (verif_overflow(nb, verif, sign))
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+int	ft_numeric_argument_error(const char *str)
+{
+	if (ft_strlen(str) > 20)
+		return (0);
+	if (!can_atoll(str))
+		return (0);
+	while (*str && *str == ' ')
+		str++;
+	if (*str == '+' || *str == '-')
+		str++;
+	while (*str && *str != ' ')
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	while (*str && *str == ' ')
+		str++;
+	if (*str != '\0')
+		return (0);
+	return (1);
+}
+
+int	ft_atoll(const char *str)
+{
+	int				i;
+	long long int	nb;
+	int				sign;
+	int				res;
+
+	if (*str == '\0')
+		return (0);
+	i = 0;
+	sign = 1;
+	nb = 0;
+	while ((i[str] >= 9 && i[str] <= 13) || i[str] == ' ')
+		i++;
+	if (i[str] == '+' || i[str] == '-')
+	{
+		if (i[str] == '-')
+			sign *= -1;
+		i++;
+	}
+	while (i[str] >= '0' && i[str] <= '9')
+	{
+		nb = nb * 10 + (i[str] - '0');
+		i++;
+	}
+	res = (nb * sign) % 256;
+	return (res);
+}
+
+int	ft_exit(t_minishell *shell, char **tab)
 {
 	int	i;
 	int	exit_code;
 
 	i = 0;
-	exit_code = 2;
-	while (tab[i])
+	exit_code = 0;
+	ft_dprintf(2, "exit\n");
+	if (*tab)
 	{
-		if (ft_isdigit(tab[i]) == 0)
+		if (!ft_numeric_argument_error(*tab))
 		{
-			free(tab);
-			exit(exit_code);
+			ft_dprintf(STDERR_FILENO, "minishell: exit: %s: numeric argument"
+				" required\n", *tab);
+			shell->exit = true;
+			return (2);
 		}
-		i++;
+		if (1[tab])
+			return (ft_dprintf(STDERR_FILENO, "minishell: exit: too many"
+					" arguments\n"), 1);
+		exit_code = ft_atoll(*tab);
 	}
-	exit_code = ft_atoi(tab);
-	free(tab);
-	ft_printf("%s\n", "exit");
-	exit(exit_code);
+	shell->exit = true;
+	return (exit_code);
 }

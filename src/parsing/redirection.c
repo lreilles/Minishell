@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:52:01 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/11 04:06:05 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/05 21:43:05 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ int	open_redirection(t_minishell *shell, t_command *cmd, int i)
 				"%s: ambiguous redirect\n", cmd->cmd[i + 1]), 1);
 	if (tmp[0][0] == '\0')
 		return (ft_free_tab(tmp), expand_redirect(cmd->cmd[i + 1], shell), 1);
-	if (ft_strcmp(cmd->cmd[i][0] ,"<"))
+	if (ft_strcmp(cmd->cmd[i], "<"))
 	{
 		if (open_with_error(shell, cmd, tmp[0], 1) == 1)
 			return (ft_free_tab(tmp), 1);
 	}
-	else if (ft_strcmp(cmd->cmd[i][0] , ">") == 0)
+	else if (ft_strcmp(cmd->cmd[i], ">") == 0)
 	{
 		if (open_with_error(shell, cmd, tmp[0], 3) == 1)
 			return (ft_free_tab(tmp), 1);

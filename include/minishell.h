@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/13 02:26:33 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/05 19:39:28 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,4 +178,5 @@ int						ft_parse_exit(t_minishell *shell, t_command *cmd);
 int						ft_parse_pwd(t_minishell *shell, t_command *cmd);
 int						ft_parse_unset(t_minishell *shell, t_command *cmd);
 int						ft_parse_export(t_minishell *shell, t_command *cmd);
+int						ft_exit(t_minishell *shell, char **tab);
 #endif
