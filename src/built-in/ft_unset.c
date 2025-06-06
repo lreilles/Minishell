@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 18:47:17 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/06 12:07:37 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/06 13:32:52 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_unset(t_minishell *shell, char **unset)
 	{
 		temp = 0;
 		value = get_env_value(shell, shell->env, *unset, &temp);
-		if (ft_strcmp(value, "") != 0)
+		if (ft_strcmp(value, "") != 0 && ft_strcmp(*unset, "?") != 0)
 			ft_tabdel(&(shell->env), *unset);
 		free(value);
 		unset++;

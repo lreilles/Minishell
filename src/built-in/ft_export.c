@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:21:44 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/06 12:58:19 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/06 13:29:38 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*before_equal(char *value)
 	char	*result;
 
 	i = 0;
-	while (value[i] != '=')
+	while (value[i] != '=' && value[i])
 		i++;
 	result = malloc(sizeof(char) * (i + 2));
 	ft_strlcpy(result, value, i + 1);
@@ -32,8 +32,10 @@ char	*after_equal(char *value)
 	char	*result;
 
 	i = 0;
-	while (value[i] != '=')
+	while (value[i] != '=' && value[i])
 		i++;
+	if (!value[i])
+		return (ft_strdup(""));
 	i++;
 	j = ft_strlen(value) - i;
 	result = malloc(j + 1);
@@ -63,6 +65,20 @@ void	ft_export_with_value(t_minishell *shell, char *export)
 	shell->env = new_env;
 }
 
+int	have_equal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_export(t_minishell *shell, char **export)
 {
 	char	*result;
@@ -77,13 +93,13 @@ int	ft_export(t_minishell *shell, char **export)
 		temp = 0;
 		first_value = before_equal(export[i]);
 		result = get_env_value(shell, shell->env, first_value, &temp);
-		if (ft_strcmp(result, "") != 0)
+		if (ft_strcmp(result, "") != 0 && have_equal(export[i]))
 		{
 			end_value = after_equal(export[i]);
 			edit_env_value(shell, first_value, end_value);
 			free(end_value);
 		}
-		else
+		else if (have_equal(export[i]))
 			ft_export_with_value(shell, export[i]);
 		free(first_value);
 		free(result);
