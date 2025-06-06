@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 07:56:55 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/14 01:23:29 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:49:26 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	ft_parse_export(t_minishell *shell, t_command *cmd)
 	if (ft_dup2(cmd))
 		return (1);
 	new_cmd_expand(&cmd->cmd, shell);
-	// shell->exit_status = ft_export(shell, cmd->cmd + 1);
-	shell->exit_status = 0;
+	shell->exit_status = ft_export(shell, cmd->cmd + 1);
 	dup2(tmp[0], 0);
 	dup2(tmp[1], 1);
 	return (shell->exit_status);

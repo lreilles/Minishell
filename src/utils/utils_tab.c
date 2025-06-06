@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:00:44 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/14 00:10:08 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:15:05 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,31 @@ int	ft_tablen(char **tab)
 	while (tab[len])
 		len++;
 	return (len);
+}
+
+void	ft_tabdel(char ***tab, char *value)
+{
+	int		i;
+	int		j;
+	char	**new_tab;
+
+	j = ft_tablen(*tab) - 1;
+	new_tab = malloc(sizeof(char *) * (j + 1));
+	if (!new_tab)
+		return ;
+	new_tab[j] = NULL;
+	i = 0;
+	j = 0;
+	while ((*tab)[i])
+	{
+		if (ft_strncmp((*tab)[i], value, ft_strlen(value)) == 0
+			&& (*tab)[i][ft_strlen(value)] == '=')
+			free((*tab)[i]);
+		else
+			new_tab[j++] = (*tab)[i];
+		i++;
+	}
+	i = 0;
+	free(*tab);
+	*tab = new_tab;
 }

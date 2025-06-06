@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/05 19:39:28 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:19:15 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void					ft_verif_is_directory(char **cmd_exec, char **env);
 char					*my_getenv(char **env);
 void					unlink_all_tmp(int nbr);
 char					*have_tmp_file(int i);
+void					ft_tabdel(char ***tab, char *value);
 // executing functions
 void					ft_execute_cmds(t_minishell *shell);
 void					ft_execute_lastcmd(t_command *cmd, t_minishell *shell,
@@ -179,4 +180,6 @@ int						ft_parse_pwd(t_minishell *shell, t_command *cmd);
 int						ft_parse_unset(t_minishell *shell, t_command *cmd);
 int						ft_parse_export(t_minishell *shell, t_command *cmd);
 int						ft_exit(t_minishell *shell, char **tab);
+void					ft_unset(t_minishell *shell, char **unset);
+int						ft_export(t_minishell *shell, char **export);
 #endif

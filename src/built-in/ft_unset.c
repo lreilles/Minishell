@@ -3,21 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 18:47:17 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/05/13 04:15:41 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/06/06 12:07:37 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_unset(t_minishell *minishell, char **unset)
+void	ft_unset(t_minishell *shell, char **unset)
 {
-	int	i;
+	char	*value;
+	int		temp;
 
-	i = 0;
-	
-		return (-1);
-	return (0);
+	while (*unset)
+	{
+		temp = 0;
+		value = get_env_value(shell, shell->env, *unset, &temp);
+		if (ft_strcmp(value, "") != 0)
+			ft_tabdel(&(shell->env), *unset);
+		free(value);
+		unset++;
+	}
 }
