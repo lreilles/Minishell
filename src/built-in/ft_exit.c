@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 00:31:10 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/05 21:41:25 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/07 22:29:16 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	can_atoll(const char *str)
 	{
 		verif = nb;
 		nb = nb * 10 + (*str - '0');
-		dprintf(2, "test , nb = %lld\n", nb);
 		if (verif_overflow(nb, verif, sign))
 			return (0);
 		str++;

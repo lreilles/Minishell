@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:00:44 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/06 12:15:05 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/07 22:31:12 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**ft_tabdup(char **tab)
 	i = 0;
 	while (tab != NULL && tab[i] != NULL)
 	{
-		res[i] = ft_strdup(tab[i]);
+		i[res] = ft_strdup(tab[i]);
 		i++;
 	}
 	res[i] = NULL;
@@ -40,9 +40,9 @@ void	ft_free_tab(char **tab)
 	i = 0;
 	if (!tab)
 		return ;
-	while (tab[i])
+	while (i[tab])
 	{
-		free(tab[i]);
+		free(i[tab]);
 		i++;
 	}
 	free(tab);
