@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:21:44 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/06 13:29:38 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/09 00:49:28 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*after_equal(char *value)
 		i++;
 	if (!value[i])
 		return (ft_strdup(""));
+	
 	i++;
 	j = ft_strlen(value) - i;
 	result = malloc(j + 1);
@@ -87,23 +88,22 @@ int	ft_export(t_minishell *shell, char **export)
 	int		i;
 	char	*end_value;
 
-	i = 0;
-	while (export[i])
+	i = -1;
+	while (export[++i])
 	{
 		temp = 0;
 		first_value = before_equal(export[i]);
 		result = get_env_value(shell, shell->env, first_value, &temp);
-		if (ft_strcmp(result, "") != 0 && have_equal(export[i]))
+		if (found_error(shell, export[i], 1) && (ft_strcmp(result, "") != 0))
 		{
 			end_value = after_equal(export[i]);
 			edit_env_value(shell, first_value, end_value);
 			free(end_value);
 		}
-		else if (have_equal(export[i]))
+		else if (found_error(shell, export[i], 0) == 0)
 			ft_export_with_value(shell, export[i]);
 		free(first_value);
 		free(result);
-		i++;
 	}
 	return (0);
 }

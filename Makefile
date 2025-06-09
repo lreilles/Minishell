@@ -51,7 +51,8 @@ SRC_FILES = main.c \
 			built-in/ft_cd.c \
 			built-in/ft_exit.c \
 			built-in/ft_unset.c \
-			built-in/ft_export.c 
+			built-in/ft_export.c\
+			built-in/ft_export_error.c
 
 SRC = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)

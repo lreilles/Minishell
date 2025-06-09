@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_export_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 18:47:17 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/09 00:49:30 by ameduboi         ###   ########.fr       */
+/*   Created: 2025/06/08 22:36:32 by ameduboi          #+#    #+#             */
+/*   Updated: 2025/06/09 00:28:08 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	ft_unset(t_minishell *shell, char **unset)
+int	found_error(t_minishell *shell, char *export, int j)
 {
-	char	*value;
-	int		temp;
+	int	i;
 
-	while (*unset)
+	i = 0;
+	if (export[0] == '=')
 	{
-		temp = 0;
-		value = get_env_value(shell, shell->env, *unset, &temp);
-		if (ft_strcmp(value, "") != 0 && ft_strcmp(*unset, "?") != 0)
-			ft_tabdel(&(shell->env), *unset);
-		free(value);
-		unset++;
+		if (j == 1)
+			ft_dprintf(2, "minishell: export: '%s': not a valid "
+					"identifier\n", export);
+		return (1);
 	}
+	else if (ft_isdigit(export[i]) == 1)
+	{
+		if (j == 1)
+			ft_dprintf(2, "minishell: export: '%i': not a valid "
+					"identifier\n", shell->exit_status);
+		return (1);
+	}
+	if (have_equal(export) == 0)
+                return (1);
+	return (0);
 }
