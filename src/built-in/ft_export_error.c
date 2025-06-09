@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 22:36:32 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/09 19:00:33 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:50:44 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,19 @@ int	found_error(char *export, int j)
 	if (export[0] == '=')
 	{
 		if (j == 1)
-			ft_dprintf(2, "minishell: export: '%s': not a valid "
+			ft_dprintf(2, "minishell: export: `%s': not a valid "
 				"identifier\n", export);
 		return (1);
 	}
 	else if (ft_isdigit(export[i]) == 1)
 	{
 		if (j == 1)
-			ft_dprintf(2, "minishell: export: '%s': not a valid "
+			ft_dprintf(2, "minishell: export: `%s': not a valid "
 				"identifier\n", export);
 		return (1);
 	}
+	else if (ft_isalnum(export[i] == 0))
+
 	if (have_equal(export) == 0)
 		return (1);
 	return (0);
