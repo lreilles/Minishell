@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 16:08:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/05 19:48:49 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/08 19:58:13 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	minishell(t_minishell *shell)
 		}
 		if (shell->line == NULL)
 			return ((void)ft_dprintf(2, "exit\n"));
-		if (shell->line[0] == '\0')
+		if (ft_strcmp(shell->line, "") == 0)
 		{
 			free(shell->line);
 			continue ;

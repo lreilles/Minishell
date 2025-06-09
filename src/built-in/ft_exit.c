@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 00:31:10 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/07 22:29:16 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/08 19:54:55 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	ft_exit(t_minishell *shell, char **tab)
 		{
 			ft_dprintf(STDERR_FILENO, "minishell: exit: %s: numeric argument"
 				" required\n", *tab);
-			shell->exit = true;
+			shell->exit = 1;
 			return (2);
 		}
 		if (1[tab])
@@ -123,6 +123,6 @@ int	ft_exit(t_minishell *shell, char **tab)
 					" arguments\n"), 1);
 		exit_code = ft_atoll(*tab);
 	}
-	shell->exit = true;
+	shell->exit = 1;
 	return (exit_code);
 }
