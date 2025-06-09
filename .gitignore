@@ -4,3 +4,4 @@ minishell
 *.a
 obj/
 test
+*.swp

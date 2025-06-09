@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/08 22:45:43 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:01:04 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ int						ft_parse_export(t_minishell *shell, t_command *cmd);
 int						ft_exit(t_minishell *shell, char **tab);
 void					ft_unset(t_minishell *shell, char **unset);
 int						ft_export(t_minishell *shell, char **export);
-int  					have_equal(char *str);
-int 					found_error(t_minishell *shell, char *export, int j);
+int						have_equal(char *str);
+int						found_error(t_minishell *shell, char *export, int j);
+int						isinenv(t_minishell *shell, char *name, char *result);
 #endif
