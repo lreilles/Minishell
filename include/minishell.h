@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/09 19:01:04 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:53:59 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void					ft_execute_lastcmd_pipe(t_command *cmd,
 							t_minishell *shell);
 // built-in functions
 int						ft_echo(char **str, int flag);
-int						pwd(void);
+int						pwd(t_minishell *shell);
 int						ft_cd(t_minishell *minishell, char **cmd);
 int						env(t_minishell *minishell);
 int						ft_parse_echo(t_minishell *shell, t_command *cmd);
