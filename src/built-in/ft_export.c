@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:21:44 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/09 19:00:23 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:12:48 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_export(t_minishell *shell, char **export)
 			edit_env_value(shell, first, end);
 			free(end);
 		}
-		else if (!found_error(export[i], 0) == 0)
+		else if (!found_error(export[i], 0))
 			ft_export_with_value(shell, export[i]);
 		free(first);
 		free(res);
