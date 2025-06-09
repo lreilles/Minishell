@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-int	found_error(t_minishell *shell, char *export, int j)
+int	found_error(char *export, int j)
 {
 	int	i;
 
@@ -27,8 +27,8 @@ int	found_error(t_minishell *shell, char *export, int j)
 	else if (ft_isdigit(export[i]) == 1)
 	{
 		if (j == 1)
-			ft_dprintf(2, "minishell: export: '%i': not a valid "
-				"identifier\n", shell->exit_status);
+			ft_dprintf(2, "minishell: export: '%s': not a valid "
+				"identifier\n", export);
 		return (1);
 	}
 	if (have_equal(export) == 0)

@@ -183,6 +183,6 @@ int						ft_exit(t_minishell *shell, char **tab);
 void					ft_unset(t_minishell *shell, char **unset);
 int						ft_export(t_minishell *shell, char **export);
 int						have_equal(char *str);
-int						found_error(t_minishell *shell, char *export, int j);
+int						found_error(char *export, int j);
 int						isinenv(t_minishell *shell, char *name, char *result);
 #endif

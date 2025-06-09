@@ -79,13 +79,13 @@ int	ft_export(t_minishell *shell, char **export)
 		temp = 0;
 		first = before_equal(export[i]);
 		res = get_env_value(shell, shell->env, first, &temp);
-		if (!found_error(shell, export[i], 1) && isinenv(shell, first, res))
+		if (!found_error(export[i], 1) && isinenv(shell, first, res))
 		{
 			end = after_equal(export[i]);
 			edit_env_value(shell, first, end);
 			free(end);
 		}
-		else if (found_error(shell, export[i], 0) == 0)
+		else if (!found_error(export[i], 0) == 0)
 			ft_export_with_value(shell, export[i]);
 		free(first);
 		free(res);
