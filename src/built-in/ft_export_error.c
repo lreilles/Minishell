@@ -12,27 +12,29 @@
 
 #include "../../include/minishell.h"
 
+int	verif_special_char(char c)
+{
+	if (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
+		|| c == '\'' || c == '\"' || c == ' ' || c == ',' || c == '.'
+		|| c == ':' || c == '/' || c == '{' || c == '}' || c == '+'
+		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
+		|| c == '~'
+		|| c == '=' || c == '-' || c == '?' || c == '&' || c == '*')
+	return (1);
+}
+
 int	found_error(char *export, int j)
 {
 	int	i;
 
 	i = 0;
-	if (export[0] == '=')
+	if (export[0] == '=' || ft_isdigit(export[i]) == 1 || verif_special_char(export[i]) == 1)
 	{
 		if (j == 1)
 			ft_dprintf(2, "minishell: export: `%s': not a valid "
 				"identifier\n", export);
 		return (1);
 	}
-	else if (ft_isdigit(export[i]) == 1)
-	{
-		if (j == 1)
-			ft_dprintf(2, "minishell: export: `%s': not a valid "
-				"identifier\n", export);
-		return (1);
-	}
-	else if (ft_isalnum(export[i] == 0))
-
 	if (have_equal(export) == 0)
 		return (1);
 	return (0);
