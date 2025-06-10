@@ -103,10 +103,8 @@ int	ft_atoll(const char *str)
 
 int	ft_exit(t_minishell *shell, char **tab)
 {
-	int	i;
 	int	exit_code;
 
-	i = 0;
 	exit_code = 0;
 	ft_dprintf(2, "exit\n");
 	if (*tab)
