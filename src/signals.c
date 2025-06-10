@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:43:51 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/10 03:54:28 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/10 09:08:13 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	int_handler_wait(int sig)
 	ft_dprintf(2, "\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	g_sig = 130;
+	g_sig = 131;
 }
 
 void	signals_wait(void)

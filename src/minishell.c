@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 16:08:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/08 19:58:13 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/10 09:08:30 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	minishell(t_minishell *shell)
 		shell->line = readline("\033[1;33mMini station essence "
 				"⛽ $ \033[0m");
 		signals(SIGNAL_IGN);
-		if (g_sig == 130)
+		if (g_sig == 130 || g_sig == 131)
 		{
 			shell->exit_status = g_sig;
 			g_sig = 0;
