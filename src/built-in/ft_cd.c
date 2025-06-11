@@ -6,7 +6,7 @@
 /*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:32:35 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/05/14 17:03:26 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/06/11 03:35:26 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,23 @@ int	ft_cd(t_minishell *minishell, char **cmd)
 	int		verif;
 	char	*path;
 	int		tmp;
+	char	*tmp_pwd;
 
+	path = NULL;
 	tmp = 0;
 	if (ft_tablen(cmd) > 1)
 		return (ft_dprintf(2, "minishell: cd: too many arguments\n"), 1);
 	verif = chdir(cmd[0]);
 	if (verif < 0)
-		return (ft_dprintf(2, "cd: %s: No such file or directory\n",
-				cmd[0]), 1);
-	path = get_env_value(minishell, minishell->env, "PWD", &tmp);
+		return (ft_dprintf(2, "cd: %s: No such file or directory\n", cmd[0]),
+			1);
+	path = getcwd(NULL, 0);
+	tmp_pwd = get_env_value(minishell, minishell->env, "PWD", &tmp);
+	if (tmp_pwd)
+		edit_env_value(minishell, "OLDPWD", tmp_pwd);
 	if (path)
-	{
-		edit_env_value(minishell, "OLDPWD", path);
-		edit_env_value(minishell, "PWD", cmd[0]);
-	}
+		edit_env_value(minishell, "PWD", path);
+	free(tmp_pwd);
 	free(path);
 	return (0);
 }

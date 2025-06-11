@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/11 00:07:33 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/11 04:07:34 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,5 +184,6 @@ void					ft_unset(t_minishell *shell, char **unset);
 int						ft_export(t_minishell *shell, char **export);
 int						have_equal(char *str);
 int						found_error(char *export, int j, t_minishell *shell);
+char					*before_equal(char *value);
 int						isinenv(t_minishell *shell, char *name, char *result);
 #endif
