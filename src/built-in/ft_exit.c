@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 00:31:10 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/10 09:06:48 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/11 00:28:28 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	can_atoll(const char *str)
 
 int	ft_numeric_argument_error(const char *str)
 {
+	if (ft_strcmp(str, "") == 0)
+		return (0);
 	if (ft_strlen(str) > 20)
 		return (0);
 	if (!can_atoll(str))

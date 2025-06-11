@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:21:44 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/09 19:12:48 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/06/11 00:09:33 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,26 @@ int	ft_export(t_minishell *shell, char **export)
 	char	*end;
 
 	i = -1;
+	shell->exit_status = 0;
 	while (export[++i])
 	{
 		temp = 0;
 		first = before_equal(export[i]);
 		res = get_env_value(shell, shell->env, first, &temp);
-		if (!found_error(export[i], 1) && isinenv(shell, first, res))
+		if (!found_error(export[i], 1, shell) && isinenv(shell, first, res))
 		{
 			end = after_equal(export[i]);
 			edit_env_value(shell, first, end);
 			free(end);
+			shell->exit_status = 0;
 		}
-		else if (!found_error(export[i], 0))
+		else if (!found_error(export[i], 0, shell))
+		{
 			ft_export_with_value(shell, export[i]);
+			shell->exit_status = 0;
+		}
 		free(first);
 		free(res);
 	}
-	return (0);
+	return (shell->exit_status);
 }

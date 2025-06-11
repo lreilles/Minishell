@@ -6,33 +6,41 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 22:36:32 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/09 19:50:44 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/06/11 00:20:49 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	verif_special_char(char c)
+int	verif_special_str_export(char *str)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '[' || c == ']'
-		|| c == '\'' || c == '\"' || c == ' ' || c == ',' || c == '.'
-		|| c == ':' || c == '/' || c == '{' || c == '}' || c == '+'
-		|| c == '^' || c == '%' || c == '#' || c == '@' || c == '!'
-		|| c == '~'
-		|| c == '=' || c == '-' || c == '?' || c == '&' || c == '*')
-	return (1);
+	while (*str != '=' && *str)
+	{
+		if (*str == '|' || *str == '<' || *str == '>' || *str == '['
+			|| *str == ']' || *str == '\'' || *str == '\"' || *str == ' '
+			|| *str == ',' || *str == '.' || *str == ':' || *str == '/'
+			|| *str == '{' || *str == '}' || *str == '+' || *str == '^'
+			|| *str == '%' || *str == '#' || *str == '@' || *str == '!'
+			|| *str == '~' || *str == '=' || *str == '-' || *str == '?'
+			|| *str == '&' || *str == '*')
+			return (1);
+		str++;
+	}
+	return (0);
 }
 
-int	found_error(char *export, int j)
+int	found_error(char *export, int j, t_minishell *shell)
 {
 	int	i;
 
 	i = 0;
-	if (export[0] == '=' || ft_isdigit(export[i]) == 1 || verif_special_char(export[i]) == 1)
+	if (export[0] == '=' || ft_isdigit(export[i])
+		|| verif_special_str_export(export))
 	{
 		if (j == 1)
 			ft_dprintf(2, "minishell: export: `%s': not a valid "
 				"identifier\n", export);
+		shell->exit_status = 1;
 		return (1);
 	}
 	if (have_equal(export) == 0)
