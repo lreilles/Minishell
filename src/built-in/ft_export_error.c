@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/08 22:36:32 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/11 00:20:49 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/12 01:40:20 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
