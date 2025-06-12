@@ -6,7 +6,7 @@
 /*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 22:21:44 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/12 01:40:19 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/06/12 03:19:12 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_export_with_value(t_minishell *shell, char *export)
 	new_env[i] = NULL;
 	free(shell->env);
 	shell->env = new_env;
+	shell->exit_status = 0;
 }
 
 int	ft_export(t_minishell *shell, char **export)
@@ -74,9 +75,9 @@ int	ft_export(t_minishell *shell, char **export)
 	char	*end;
 
 	i = -1;
-	shell->exit_status = 0;
 	while (export[++i])
 	{
+		shell->exit_status = 0;
 		temp = 0;
 		first = before_equal(export[i]);
 		res = get_env_value(shell, shell->env, first, &temp);
@@ -85,13 +86,9 @@ int	ft_export(t_minishell *shell, char **export)
 			end = after_equal(export[i]);
 			edit_env_value(shell, first, end);
 			free(end);
-			shell->exit_status = 0;
 		}
 		else if (!found_error(export[i], 0, shell))
-		{
 			ft_export_with_value(shell, export[i]);
-			shell->exit_status = 0;
-		}
 		free(first);
 		free(res);
 	}

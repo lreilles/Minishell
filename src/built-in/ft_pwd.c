@@ -6,7 +6,7 @@
 /*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:31:25 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/12 01:40:16 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/06/12 03:20:32 by ameduboi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,3 @@ int	pwd(t_minishell *shell)
 	free(path);
 	return (0);
 }
-
