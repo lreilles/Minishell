@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:08:35 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/14 01:46:32 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/12 04:49:28 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char **av)
 
 	signals(SIGNAL_IGN);
 	rl_outstream = stderr;
-	init_struct(&shell, av + ac + 1);
+	init_struct(&shell, av + ac + 1, *(av + 1));
 	minishell(shell);
 	close_fds(0);
 	return (free_struct(shell));

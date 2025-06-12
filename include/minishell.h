@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/12 01:40:55 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/06/12 04:55:40 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# define MSG_PROMPT "Mini station essence $ "
+# define MSG_PROMPT_COLOR "\033[1;33mMini station essence ⛽ $ \033[0m"
 # ifndef SIGNALS
 #  define SIGNALS
 #  define SIGNAL_EXECUTE 1
@@ -43,6 +45,7 @@ extern int				g_sig;
 
 typedef struct s_minishell
 {
+	char				*prompt;
 	char				**env;
 	char				*line;
 	int					exit;
@@ -75,7 +78,7 @@ void					signals(int sig);
 void					signals_wait(void);
 char					**ft_tabdup(char **tab);
 void					ft_free_tab(char **tab);
-void					init_struct(t_minishell **shell, char **env);
+void					init_struct(t_minishell **shell, char **env, char *flag);
 int						free_struct(t_minishell *shell);
 void					close_fds(int fd);
 void					close_fds_without(int fd, int fd_in, int fd_out);

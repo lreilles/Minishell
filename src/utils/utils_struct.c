@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:01:55 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/08 02:06:38 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/12 04:58:42 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,18 @@ void	shlvl(t_minishell **shell)
 	free(shlvl);
 }
 
-void	init_struct(t_minishell **shell, char **env)
+void	init_struct(t_minishell **shell, char **env, char *flag)
 {
 	*shell = malloc(sizeof(t_minishell));
+	if (!(*shell))
+	{
+		ft_dprintf(2, "Error: malloc failed in init_struct\n");
+		exit(EXIT_FAILURE);
+	}
+	if (flag && !ft_strcmp(flag, "--color"))
+		(*shell)->prompt = MSG_PROMPT_COLOR;
+	else
+		(*shell)->prompt = MSG_PROMPT;
 	(*shell)->env = ft_tabdup(env);
 	(*shell)->exit_status = 0;
 	(*shell)->exit = 0;

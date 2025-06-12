@@ -71,6 +71,8 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+c:
+	@./minishell --color
 clean:
 	$(RM) -r $(OBJDIR)
 	$(MAKE) -C libft clean
