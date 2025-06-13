@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 21:52:51 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/12 19:40:29 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:59:50 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	count_tab_len(char *line)
 		else if (line[i] == '"' || line[i] == '\'')
 		{
 			increment_if_necessary(&len, &add_len);
+			ft_dprintf(2, "line[%i] = %c\n", i, line[i]);
 			skip_quotes(line, &i, line[i]);
 		}
 		else if (ft_is_separator(line[i]))

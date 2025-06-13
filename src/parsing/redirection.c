@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 01:52:01 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/11 02:54:20 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/13 05:50:08 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	expand_redirect(char *cmd, t_minishell *shell)
 	char	*str;
 
 	str = without_quotes(cmd);
-	if (ft_is_quote(cmd[0]) || strcmp(cmd, "$") == 0)
+	if (ft_is_quote(cmd[0]) || ft_strcmp(cmd, "$") == 0)
 	{
 		ft_dprintf(2, "minishell: %s: No such file or directory\n", str);
 		shell->exit_status = 1;

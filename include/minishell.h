@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/12 04:55:40 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:51:41 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void					signals(int sig);
 void					signals_wait(void);
 char					**ft_tabdup(char **tab);
 void					ft_free_tab(char **tab);
-void					init_struct(t_minishell **shell, char **env, char *flag);
+void					init_struct(t_minishell **shell, char **env,
+							char *flag);
 int						free_struct(t_minishell *shell);
 void					close_fds(int fd);
 void					close_fds_without(int fd, int fd_in, int fd_out);
@@ -99,6 +100,7 @@ int						open_redirection_heredoc(t_minishell *shell,
 							t_command *cmds, int i);
 t_command				*ft_heredoc(t_minishell *shell);
 char					*ft_expand_heredoc(t_minishell *shell, char *str);
+char					*remove_quotes(char *str);
 // utils functions
 int						ft_strcmp(const char *s1, const char *s2);
 int						ft_isspace(int c);

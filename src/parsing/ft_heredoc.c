@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 00:49:38 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/12 19:23:30 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:47:57 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	open_and_loop_heredoc(t_minishell *shell, t_command **cmd,
 		free(tmp);
 		exit(1);
 	}
-	eof = without_quotes(tmp);
+	eof = remove_quotes(tmp);
 	loop_heredoc(shell, eof, fd, have_quote(tmp));
 	free(tmp);
 	free(eof);

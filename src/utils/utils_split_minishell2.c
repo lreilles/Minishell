@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 05:27:54 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/12 19:40:07 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:01:29 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	skip_quotes(char *line, int *i, char quote)
 		while (line[++(*i)] && line[*i] != quote)
 			if (line[*i] == '\\')
 				(*i)++;
-	(*i)++;
+	if (line[*i])
+		(*i)++;
 }
 
 void	increment_if_necessary(int *len, int *add_len)
