@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 04:52:34 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/14 02:50:07 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 03:24:30 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void	ft_execute_pipe(t_command *cmd, t_minishell *shell, int or_and)
 	if (!ft_waitpid(shell, or_and))
 		return ;
 	if (pipe(pipefd) == -1)
-		return ((void)ft_dprintf(2, "minishell: error pipe failed\n"));
+		return (ft_wait_pid_exit_status(shell),
+			(void)ft_dprintf(2, "minishell: "
+				"error pipe failed\n"));
 	cmd->fd_out_put = ft_add_lst_int(&shell->fd_list, pipefd[1]);
 	cmd->next->fd_in_put = ft_add_lst_int(&shell->fd_list, pipefd[0]);
 	cmd->pid = fork();
