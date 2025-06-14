@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:08:35 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/12 04:49:28 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 02:17:20 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int	main(int ac, char **av)
 	rl_outstream = stderr;
 	init_struct(&shell, av + ac + 1, *(av + 1));
 	minishell(shell);
-	close_fds(0);
+	close_fds(&shell->fd_list);
 	return (free_struct(shell));
 }

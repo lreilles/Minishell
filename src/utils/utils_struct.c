@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 00:01:55 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/12 04:58:42 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:31:57 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	init_struct(t_minishell **shell, char **env, char *flag)
 	(*shell)->args = NULL;
 	(*shell)->cmds = NULL;
 	(*shell)->pid_list = NULL;
+	(*shell)->fd_list = NULL;
+	(*shell)->line = NULL;
 	shlvl(shell);
 }
 
@@ -87,15 +89,15 @@ int	free_struct(t_minishell *shell)
 	return (exit_status);
 }
 
-void	ft_free_t_pid(t_pid *pid_list)
+void	ft_free_t_lst_int(t_lst_int *list)
 {
-	t_pid	*tmp;
+	t_lst_int	*tmp;
 
-	while (pid_list)
+	while (list)
 	{
-		tmp = pid_list;
-		pid_list = pid_list->next;
+		tmp = list;
+		list = list->next;
 		free(tmp);
 	}
-	pid_list = NULL;
+	list = NULL;
 }

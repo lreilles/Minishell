@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 21:43:51 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/11 23:50:18 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 01:05:03 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ static void	here_doc_sigint(int sig)
 	(void)sig;
 	ft_dprintf(2, "\n");
 	g_sig = 130;
-	close_fds(0);
+	close(0);
+	close(1);
+	close(2);
 }
 
 void	signals(int sig)

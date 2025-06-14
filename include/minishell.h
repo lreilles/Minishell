@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/13 22:51:41 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 02:23:57 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,17 @@ typedef struct s_minishell
 	int					nb_args;
 	int					nbr_file;
 	char				**args;
-	struct s_pid		*pid_list;
+	struct s_lst_int	*fd_list;
+	struct s_lst_int	*pid_list;
 	struct s_command	*cmds;
 
 }						t_minishell;
 
-typedef struct s_pid
+typedef struct s_lst_int
 {
-	pid_t				pid;
-	struct s_pid		*next;
-}						t_pid;
+	int					nbr;
+	struct s_lst_int	*next;
+}						t_lst_int;
 
 typedef struct s_command
 {
@@ -81,8 +82,9 @@ void					ft_free_tab(char **tab);
 void					init_struct(t_minishell **shell, char **env,
 							char *flag);
 int						free_struct(t_minishell *shell);
-void					close_fds(int fd);
-void					close_fds_without(int fd, int fd_in, int fd_out);
+void					close_fds(t_lst_int **fd_list);
+void					close_fds_without(t_lst_int **fd_list, int fd_in,
+							int fd_out);
 
 // parsing functions
 int						parsing(t_minishell *shell, char *line);
@@ -132,8 +134,8 @@ void					ft_free_t_command(t_minishell *shell);
 int						ft_counts_cmds(t_command *cmd);
 void					skip_expand_null(char **cmd, t_minishell *shell,
 							int *i);
-void					ft_free_t_pid(t_pid *pid_list);
-int						ft_dup2(t_command *cmd);
+void					ft_free_t_lst_int(t_lst_int *pid_list);
+int						ft_dup2(t_minishell *shell, t_command *cmd);
 void					ft_free_before_exit(t_minishell *shell, int fd_in,
 							int fd_out);
 char					*ft_strjoin_check(char *str1, char *str2);
@@ -164,7 +166,7 @@ void					ft_execute_with_fork(t_command *cmd,
 void					ft_wait_pid_exit_status(t_minishell *shell);
 void					ft_wait_all_pid_without_last(t_minishell *shell);
 int						ft_waitpid(t_minishell *shell, int or_and);
-t_pid					*ft_add_pid(t_pid *pid_list, pid_t pid);
+int						ft_add_lst_int(t_lst_int **list_int, int nbr);
 int						*have_static_int(int nbr);
 void					ft_chose_next_separator(t_command *cmd,
 							t_minishell *shell, int or_and);

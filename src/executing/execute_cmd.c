@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 07:33:14 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/08 07:40:30 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 02:15:12 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	ft_execute_lastcmd(t_command *cmd, t_minishell *shell, int or_and)
 	{
 		cmd->pid = fork();
 		if (cmd->pid == -1)
-			return (close_fds(3), (void)ft_dprintf(2, "minishell: error"
-					" fork failed\n"));
+			return (close_fds(&shell->fd_list), (void)ft_dprintf(2,
+					"minishell: error fork failed\n"));
 		if (cmd->pid == 0)
 			ft_execute_cmd(cmd, shell);
-		shell->pid_list = ft_add_pid(shell->pid_list, cmd->pid);
+		ft_add_lst_int(&shell->pid_list, cmd->pid);
 	}
 	ft_wait_pid_exit_status(shell);
 	return ;
@@ -38,7 +38,7 @@ void	ft_execute_lastcmd_pipe(t_command *cmd, t_minishell *shell)
 	if (cmd->pid == -1)
 	{
 		ft_dprintf(2, "minishell: error fork failed\n");
-		close_fds(3);
+		close_fds(&shell->fd_list);
 		ft_wait_pid_exit_status(shell);
 		return ;
 	}
@@ -49,7 +49,7 @@ void	ft_execute_lastcmd_pipe(t_command *cmd, t_minishell *shell)
 		else
 			ft_execute_cmd(cmd, shell);
 	}
-	shell->pid_list = ft_add_pid(shell->pid_list, cmd->pid);
+	ft_add_lst_int(&shell->pid_list, cmd->pid);
 	ft_wait_pid_exit_status(shell);
 	return ;
 }
@@ -58,7 +58,7 @@ void	ft_execute_with_fork(t_command *cmd, t_minishell *shell)
 {
 	cmd->pid = fork();
 	if (cmd->pid == -1)
-		return (close_fds(3), (void)ft_dprintf(2,
+		return (close_fds(&shell->fd_list), (void)ft_dprintf(2,
 				"minishell: error fork failed\n"));
 	if (cmd->pid == 0)
 	{
@@ -67,5 +67,5 @@ void	ft_execute_with_fork(t_command *cmd, t_minishell *shell)
 		else
 			ft_execute_cmd(cmd, shell);
 	}
-	shell->pid_list = ft_add_pid(shell->pid_list, cmd->pid);
+	ft_add_lst_int(&shell->pid_list, cmd->pid);
 }

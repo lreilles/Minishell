@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 07:31:28 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/12 19:12:36 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 02:15:57 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	ft_wait_all_pid_without_last(t_minishell *shell)
 {
-	int		status;
-	pid_t	pid;
-	t_pid	*tmp;
+	int			status;
+	pid_t		pid;
+	t_lst_int	*tmp;
 
 	if (!shell->pid_list)
 		return ;
+	close_fds(&shell->fd_list);
 	signals_wait();
-	close_fds(3);
 	while (shell->pid_list->next)
 	{
-		pid = shell->pid_list->pid;
+		pid = shell->pid_list->nbr;
 		waitpid(pid, &status, 0);
 		tmp = shell->pid_list;
 		shell->pid_list = shell->pid_list->next;
@@ -34,12 +34,12 @@ void	ft_wait_all_pid_without_last(t_minishell *shell)
 
 int	ft_wait_all_pid(t_minishell *shell)
 {
-	int		status;
-	t_pid	*tmp;
+	int			status;
+	t_lst_int	*tmp;
 
 	ft_wait_all_pid_without_last(shell);
 	tmp = shell->pid_list;
-	waitpid(shell->pid_list->pid, &status, 0);
+	waitpid(shell->pid_list->nbr, &status, 0);
 	free(tmp);
 	shell->pid_list = NULL;
 	return (status);
@@ -80,6 +80,6 @@ void	ft_wait_pid_exit_status(t_minishell *shell)
 	if (!shell->pid_list)
 		return ;
 	ft_wait_all_pid_without_last(shell);
-	waitpid(shell->pid_list->pid, &status, 0);
+	waitpid(shell->pid_list->nbr, &status, 0);
 	shell->exit_status = WEXITSTATUS(status);
 }

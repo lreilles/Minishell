@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 05:09:05 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/11 02:51:49 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 02:50:41 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	parse_nothing(t_minishell *shell, t_command *cmd)
 		return (1);
 	tmp[0] = dup(0);
 	tmp[1] = dup(1);
-	if (ft_dup2(cmd))
+	if (ft_dup2(shell, cmd))
 		return (1);
 	dup2(tmp[0], 0);
 	dup2(tmp[1], 1);
-	close_fds(3);
+	close_fds(&shell->fd_list);
 	close(tmp[0]);
 	close(tmp[1]);
 	return (0);
@@ -111,6 +111,5 @@ void	ft_execute_builtin_pipe(t_minishell *shell, t_command *cmd)
 	ft_execute_builtin(shell, cmd);
 	exit_status = shell->exit_status;
 	ft_free_before_exit(shell, -1, -1);
-	close_fds(0);
 	exit(exit_status);
 }

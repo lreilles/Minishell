@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 07:19:37 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/09 04:03:43 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 02:23:47 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	ft_verif_is_directory(char **cmd_exec, char **env)
 			ft_dprintf(2, "minishell: %s: Is a directory\n", cmd_exec[0]);
 			ft_free_tab(env);
 			ft_free_tab(cmd_exec);
-			close_fds(0);
 			exit(126);
 		}
 	}

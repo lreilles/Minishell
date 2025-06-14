@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 00:49:38 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/13 22:47:57 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 02:41:38 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	open_and_loop_heredoc(t_minishell *shell, t_command **cmd,
 	{
 		ft_dprintf(2, "minishell: error open tmp heredoc\n");
 		ft_free_before_exit(shell, 0, fd);
-		close_fds(0);
+		close_fds(&shell->fd_list);
 		free(tmp);
 		exit(1);
 	}
@@ -77,7 +77,7 @@ void	open_and_loop_heredoc(t_minishell *shell, t_command **cmd,
 	free(tmp);
 	free(eof);
 	ft_free_before_exit(shell, 0, fd);
-	close_fds(0);
+	close(fd);
 	exit(g_sig);
 }
 

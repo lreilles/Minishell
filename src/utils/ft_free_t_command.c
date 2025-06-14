@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 23:46:52 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/10 01:02:23 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 02:15:54 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_free_t_command(t_minishell *shell)
 {
 	t_command	*tmp;
-	t_pid		*tmp_pid;
+	t_lst_int	*tmp_pid;
 
 	while (shell->cmds)
 	{
@@ -33,5 +33,6 @@ void	ft_free_t_command(t_minishell *shell)
 			free(tmp_pid);
 		}
 	}
+	close_fds(&shell->fd_list);
 	shell->pid_list = NULL;
 }

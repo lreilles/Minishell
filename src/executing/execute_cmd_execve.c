@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/04 13:06:09 by lsellier          #+#    #+#             */
-/*   Updated: 2025/05/14 01:48:22 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/14 02:45:05 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	ft_free_before_exit(t_minishell *shell, int fd_in, int fd_out)
 	ft_free_tab(shell->env);
 	ft_free_t_command(shell);
 	free(shell->line);
-	close_fds_without(0, fd_in, fd_out);
+	close_fds_without(&shell->fd_list, fd_in, fd_out);
+	free(shell->fd_list);
 	free(shell);
 	rl_clear_history();
 }
@@ -31,7 +32,6 @@ void	ft_execve_without_path(char **cmd_exec, char **env)
 	ft_dprintf(2, "minishell: %s: No such file or directory\n", cmd_exec[0]);
 	ft_free_tab(env);
 	ft_free_tab(cmd_exec);
-	close_fds(0);
 	exit(127);
 }
 
@@ -43,7 +43,6 @@ void	ft_execve_with_path(char **cmd_exec, char **env)
 	ft_dprintf(2, "minishell: %s: command not found\n", cmd_exec[0]);
 	ft_free_tab(env);
 	ft_free_tab(cmd_exec);
-	close_fds(0);
 	exit(127);
 }
 
@@ -71,7 +70,7 @@ void	ft_execute_cmd(t_command *cmd, t_minishell *shell)
 		ft_free_before_exit(shell, -1, -1);
 		exit(1);
 	}
-	if (ft_dup2(cmd))
+	if (ft_dup2(shell, cmd))
 	{
 		ft_free_before_exit(shell, -1, -1);
 		exit(1);
