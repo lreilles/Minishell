@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsellier <lsellier@student.42lehavre.fr    +#+  +:+       +#+        */
+/*   By: lsellier <lsellier@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 21:42:00 by lsellier          #+#    #+#             */
-/*   Updated: 2025/06/14 02:23:57 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/15 16:09:56 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ typedef struct s_command
 
 void					minishell(t_minishell *shell);
 void					signals(int sig);
-void					signals_wait(void);
 char					**ft_tabdup(char **tab);
 void					ft_free_tab(char **tab);
 void					init_struct(t_minishell **shell, char **env,
