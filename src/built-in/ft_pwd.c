@@ -6,7 +6,7 @@
 /*   By: lsellier <lsellier@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:31:25 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/27 01:27:58 by lsellier         ###   ########.fr       */
+/*   Updated: 2025/06/27 09:27:57 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	pwd(t_minishell *shell)
 	{
 		path = get_env_value(shell, shell->env, "PWD", &verif);
 		if (ft_strcmp(path, "") == 0)
-			return (ft_dprintf(2,
+			return (free(path), ft_dprintf(2,
 					"minishell: pwd: No such file or directory\n"), 1);
 		else
-			return (ft_dprintf(1, "%s\n", path), 0);
+			return (ft_dprintf(1, "%s\n", path), free(path), 0);
 	}
 	verif = ft_printf("%s\n", path);
 	if (verif < 0)
