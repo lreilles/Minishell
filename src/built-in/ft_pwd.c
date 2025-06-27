@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ameduboi <ameduboi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lsellier <lsellier@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 22:31:25 by ameduboi          #+#    #+#             */
-/*   Updated: 2025/06/12 03:20:32 by ameduboi         ###   ########.fr       */
+/*   Updated: 2025/06/27 01:27:58 by lsellier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	pwd(t_minishell *shell)
 	{
 		path = get_env_value(shell, shell->env, "PWD", &verif);
 		if (ft_strcmp(path, "") == 0)
-			ft_dprintf(2, "minishell: pwd: No such file or directory\n");
+			return (ft_dprintf(2,
+					"minishell: pwd: No such file or directory\n"), 1);
 		else
-			ft_dprintf(2, "minishell: pwd: %s: No such directory\n", path);
-		return (free(path), 1);
+			return (ft_dprintf(1, "%s\n", path), 0);
 	}
 	verif = ft_printf("%s\n", path);
 	if (verif < 0)
